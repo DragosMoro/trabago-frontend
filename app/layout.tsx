@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Montserrat } from 'next/font/google'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { ModalProvider } from '@/components/providers/ModalProvider'
 
 const font = Montserrat({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="trabago-theme"
           >
+            <ModalProvider />
         {children}
         </ThemeProvider>
         </body>

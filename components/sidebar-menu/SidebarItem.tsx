@@ -21,14 +21,14 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebaItemProps) => {
     router.push(href);
   };
   return (
-    <div className="flex items-center h-full pl-5 pr-5 pt-5">
+    <div className="flex h-full items-center pl-5 pr-5 pt-5">
       <button
         onClick={onClick}
         type="button"
         className={cn(
-          "pl-5 w-full rounded-2xl text-zinc-500 dark:text-zinc-400 text-sm font-[500] transition-all hover:bg-teal-600/20 dark:hover:bg-teal-400/10 hover:text-zinc-600 dark:hover:text-zinc-300 ",
+          "w-full rounded-2xl pl-5 text-sm font-[500] text-zinc-500 transition-all hover:bg-teal-600/20 hover:text-zinc-600 dark:text-zinc-400 dark:hover:bg-teal-400/10 dark:hover:text-zinc-300 ",
           isActive &&
-            " dark:text-zinc-100 text-zinc-100 bg-teal-700/80 dark:bg-teal-600/30 dark:hover:bg-teal-500/30 hover:bg-teal-700/90 dark:hover:text-zinc-300 hover:text-zinc-200"
+            " bg-teal-700/80 text-zinc-100 hover:bg-teal-700/90 hover:text-zinc-200 dark:bg-teal-600/30 dark:text-zinc-100 dark:hover:bg-teal-500/30 dark:hover:text-zinc-300",
         )}
       >
         <div className="flex items-center gap-x-2 py-4">
@@ -36,7 +36,7 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebaItemProps) => {
             size={22}
             className={cn(
               "text-zinc-500 dark:text-zinc-400",
-              isActive && "dark:text-zinc-100 text-zinc-100"
+              isActive && "text-zinc-100 dark:text-zinc-100",
             )}
           />
           {label}

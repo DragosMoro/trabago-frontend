@@ -1,9 +1,12 @@
 "use client";
 
-import { BarChartBig, Briefcase, FileLineChart, KanbanSquare} from "lucide-react";
-import { usePathname } from "next/navigation";
+import {
+  BarChartBig,
+  Briefcase,
+  FileLineChart,
+  KanbanSquare,
+} from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
-
 
 const routes = [
   {
@@ -28,11 +31,9 @@ const routes = [
   },
 ];
 
-
 export const SidebarRoutes = () => {
- 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       {routes.map((route) => (
         <SidebarItem
           key={route.href}
@@ -42,5 +43,5 @@ export const SidebarRoutes = () => {
         />
       ))}
     </div>
-  )
-}
+  );
+};

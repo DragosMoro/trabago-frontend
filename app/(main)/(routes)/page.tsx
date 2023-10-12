@@ -1,9 +1,11 @@
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import AddColumn from "@/components/kanban/AddColumn";
+import ColumnContainer from "@/components/kanban/ColumnContainer";
 
 export default function Home() {
     return (
-        <div>
-            <h1>Home page</h1>
+        <div className="flex">
+            <ColumnContainer/>
+            <AddColumn/>
         </div>
     )
 }
