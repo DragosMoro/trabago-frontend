@@ -12,7 +12,7 @@ const Sidebar = () => {
       <div className="flex flex-col w-full">
         <SidebarRoutes />
       </div>
-      <div className="ml-auto mr-auto mt-auto ">
+      <div className="ml-auto mr-auto mt-auto pb-5 ">
         <ModeToggle />
       </div>
     </div>
