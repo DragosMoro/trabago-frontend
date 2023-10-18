@@ -1,11 +1,10 @@
-import AddColumn from "@/components/kanban/AddColumn";
-import ColumnContainer from "@/components/kanban/ColumnContainer";
+
+import { KanbanBoard } from "@/components/kanban/KanbanBoard";
 
 export default function Home() {
     return (
         <div className="flex">
-            <ColumnContainer/>
-            <AddColumn/>
+            <KanbanBoard/>
         </div>
     )
 }
