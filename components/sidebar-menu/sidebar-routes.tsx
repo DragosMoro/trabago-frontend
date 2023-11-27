@@ -6,7 +6,7 @@ import {
   FileLineChart,
   KanbanSquare,
 } from "lucide-react";
-import { SidebarItem } from "./SidebarItem";
+import { SidebarItem } from "./sidebar-item";
 
 const routes = [
   {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AddJobModal from "../modals/AddJobModal";
+import AddJobModal from "../modals/add-job-modal";
 
 export const ModalProvider = ()=> {
 

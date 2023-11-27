@@ -1,21 +1,14 @@
-import Sidebar from "@/components/sidebar-menu/Sidebar";
+import { ModalProvider } from "@/components/providers/modal-provider";
+import React from "react";
+import { Toaster } from "sonner";
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <>
+      <Toaster />
+      <ModalProvider />
+      {children}
+    </>
+  );
+};
 
-
-const DashboardLayout = ({
-  children
-}: {
-  children: React.ReactNode;
-}) => {
-  return ( 
-    <div className="h-full">
-      <div className="hidden md:flex h-full w-60 flex-col fixed inset-y-0 z-50">
-        <Sidebar />
-      </div>
-      <main className="md:pl-60 pt-[80px] h-full">
-        {children}
-      </main>
-    </div>
-   );
-}
- 
-export default DashboardLayout;
+export default MainLayout;

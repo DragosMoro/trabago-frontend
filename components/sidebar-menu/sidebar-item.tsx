@@ -26,17 +26,17 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebaItemProps) => {
         onClick={onClick}
         type="button"
         className={cn(
-          "w-full rounded-2xl pl-5 text-sm font-[500] text-zinc-500 transition-all hover:bg-teal-600/20 hover:text-zinc-600 dark:text-zinc-400 dark:hover:bg-teal-400/10 dark:hover:text-zinc-300 ",
+          "w-full rounded-xl pl-5 text-sm font-[500] text-zinc-700 transition-all hover:bg-zinc-200/40 hover:text-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800/30 dark:hover:text-white ",
           isActive &&
-            " bg-teal-700/80 text-zinc-100 hover:bg-teal-700/90 hover:text-zinc-200 dark:bg-teal-600/30 dark:text-zinc-100 dark:hover:bg-teal-500/30 dark:hover:text-zinc-300",
+            " bg-zinc-200/80 text-zinc-800 hover:bg-zinc-300/90 hover:text-zinc-900 dark:bg-zinc-800/30 dark:text-zinc-100 dark:hover:bg-zinc-600/30 dark:hover:text-zinc-200",
         )}
       >
         <div className="flex items-center gap-x-2 py-4">
           <Icon
             size={22}
             className={cn(
-              "text-zinc-500 dark:text-zinc-400",
-              isActive && "text-zinc-100 dark:text-zinc-100",
+              "text-zinc-700 dark:text-zinc-200",
+              isActive && "text-zinc-800 dark:text-zinc-100",
             )}
           />
           {label}

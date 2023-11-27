@@ -1,17 +1,30 @@
-import { LucideIcon } from "lucide-react";
 
-export type Job = {
-  id: Id;
-  icon: LucideIcon;
-  companyName: string;
-  jobTitle: string;
-  location: string;
-  date: string;
-  columnId: Id;
-};
+export type Id = string;
+
+
+export type Card = {
+
+  id:string,
+  jobTitle:string,
+  description?:string,
+  location:string,
+  companyName:string,
+  createdAt:string,
+  updatedAt:string,
+  columnId:string,
+  order:number,
+  imageUrl:string,
+}
+
 
 export type Column = {
-  id: Id;
-  name: string;
+  id: string;
+  title: string;
+  cards: Card[];
+  color: string;
+  createdAt: string;
+  updatedAt: string;
+  order: number;
+
+
 };
-export type Id = string | number;
