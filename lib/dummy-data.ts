@@ -122,9 +122,7 @@ export const cards: Card[] = [
       imageUrl: "https://media.licdn.com/dms/image/C560BAQFrtK-ioO1rsQ/company-logo_100_100/0/1630645864762/adobe_logo?e=1709164800&v=beta&t=KKaM2Qz8-lsqquYvH4Ooymj9tcaqiGNwL90wXnOmOsg",
     },
   ];
-  
 
-  import { Card } from './Card'; // Asigură-te că calea este corectă
 
 export type Column = {
   id: string;
@@ -149,7 +147,7 @@ export const dummyColumn: Column = {
       updatedAt: '2023-01-10',
       columnId: '1',
       order: 1,
-      imageUrl: 'https://example.com/example_logo.png',
+      imageUrl: "https://media.licdn.com/dms/image/C560BAQFrtK-ioO1rsQ/company-logo_100_100/0/1630645864762/adobe_logo?e=1709164800&v=beta&t=KKaM2Qz8-lsqquYvH4Ooymj9tcaqiGNwL90wXnOmOsg",
     },
     {
       id: '2',
@@ -160,8 +158,8 @@ export const dummyColumn: Column = {
       updatedAt: '2023-02-15',
       columnId: '1',
       order: 2,
-      imageUrl: 'https://example.com/demo_logo.png',
-    },
+      imageUrl: "https://media.licdn.com/dms/image/C560BAQFrtK-ioO1rsQ/company-logo_100_100/0/1630645864762/adobe_logo?e=1709164800&v=beta&t=KKaM2Qz8-lsqquYvH4Ooymj9tcaqiGNwL90wXnOmOsg",
+     },
     // Alte carduri...
   ],
   color: '#42a5f5',

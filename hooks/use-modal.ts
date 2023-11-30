@@ -1,7 +1,7 @@
 
 import { create } from "zustand";
 
-export type ModalType = "createColumn" | "createJob" ;
+export type ModalType = "createItem" | "createColumn" ;
 
 
 interface ModalStore {

@@ -1,7 +1,9 @@
-"use client"
 
+import CardAdd from "@/components/board/card-add";
 import CardItem from "@/components/board/card-item";
+import ColumnContainer from "@/components/board/column-container";
 import ColumnHeader from "@/components/board/column-header";
+import ColumnItem from "@/components/board/column-item";
 import Navbar from "@/components/navbar/navbar";
 import dummyColumn, { cards } from "@/lib/dummy-data";
 
@@ -9,14 +11,8 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <Navbar />
-      {/* <div className="flex flex-col gap-5 ml-2">
-        {cards.map((elem, i) => (
-          <CardItem key={i} data={elem} index={i} color="#A60000"/>
-        ))}
-      </div> */}
-      <div className="w-[200px]">
-
-      <ColumnHeader data={dummyColumn} onAddCard={()=>{}} />
+      <div className="">
+        <ColumnContainer/>
       </div>
     </div>
   );
