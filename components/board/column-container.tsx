@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ColumnItem from "./column-item";
 import axios from "axios";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { ScrollArea } from "../ui/scroll-area";
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
   const result = Array.from(list);

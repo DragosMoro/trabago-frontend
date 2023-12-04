@@ -44,7 +44,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           <button
             onClick={() => setOpen(true)}
-            className="group flex lg:w-[300px] lg: max-w-[300px] max-h-[35px] items-center justify-between gap-x-5 rounded-md border px-2 py-2 transition hover:bg-zinc-700/10 dark:hover:bg-zinc-800/50"
+            className="group flex max-h-[35px] items-center justify-between gap-x-5 rounded-md border px-2 py-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-800/50"
           >
             <p className="text-sm font-semibold text-zinc-600 transition group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200">
               Search company...
@@ -65,7 +65,9 @@ const Navbar = () => {
               </CommandGroup>
             </CommandList>
           </CommandDialog>
-          <Button className="max-h-[35px]  lg:w-[150px] max-w-[150px] bg-zinc-900 text-zinc-100 hover:bg-zinc-800 border transition-all">+ Add Job</Button>
+          <Button className="max-h-[35px]  max-w-[150px] border bg-zinc-900 text-zinc-100 transition-all hover:bg-zinc-800 lg:w-[150px]">
+            + Add Job
+          </Button>
         </div>
       </div>
     </div>

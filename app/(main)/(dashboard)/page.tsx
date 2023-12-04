@@ -10,10 +10,7 @@ import dummyColumn, { cards } from "@/lib/dummy-data";
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <Navbar />
-      <div className="">
         <ColumnContainer/>
       </div>
-    </div>
   );
 }
