@@ -19,19 +19,24 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
         <li
           {...provided.draggableProps}
           ref={provided.innerRef}
-          className="h-full w-[320px] shrink-0 select-none"
+          className="h-full w-[320px]"
           style={getStyle(provided.draggableProps.style, snapshot)}
         >
           <div
-            className="pb-4 flex w-full flex-col items-center justify-center border border-neutral-900 rounded-md bg-zinc-950 shadow-md"
+            className="flex w-full flex-col items-center justify-center rounded-md border border-neutral-900 bg-zinc-950 pb-4 shadow-md"
             {...provided.dragHandleProps}
           >
-            <ColumnHeader data={data}  />
-            <div className="mx-1 my-4 flex flex-col gap-y-2 px-1 py-0.5">
+            <ColumnHeader data={data} />
+            <div
+              className={cn(
+                "mx-1 mt-4 flex flex-col gap-y-2 px-1 py-0.5",
+                data.cards.length > 0 && "mb-4",
+              )}
+            >
               <CardAdd />
             </div>
             <Droppable droppableId={data.id} type="card">
-              {(provided) => (
+              {(provided, snapshot) => (
                 <ol
                   ref={provided.innerRef}
                   {...provided.droppableProps}
@@ -45,6 +50,13 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
                       color={data.color}
                     />
                   ))}
+                  <div
+                    style={{
+                      display: snapshot.isDraggingOver ? "block" : "none",
+                    }}
+                  >
+                    {provided.placeholder}
+                  </div>
                 </ol>
               )}
             </Droppable>

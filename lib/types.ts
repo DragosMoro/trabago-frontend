@@ -7,9 +7,9 @@ export type Column = {
   updatedAt: string;
   order: number;
   color: string;
-}
+};
 
-export type Card ={
+export type Card = {
   id: string;
   company: string;
   position: string;
@@ -21,7 +21,6 @@ export type Card ={
   description: string;
   imageUrl: string;
   jobColumn: Column;
-}
-
+};
 
 export type ColumnWithCards = Column & { cards: Card[] };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCardModal } from "@/hooks/use-card-modal";
+import { useCardModal } from "@/hooks/use-modal-store";
 import { Card } from "@/lib/types";
 import Image from "next/image";
 import { Draggable } from "@hello-pangea/dnd";
