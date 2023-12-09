@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ColumnHeader from "./column-header";
-import { ColumnWithCards } from "@/lib/types";
+import { ColumnWithCards, ColumnFormatForJobAdd } from "@/lib/types";
 import CardItem from "./card-item";
 import CardAdd from "./card-add";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,8 @@ interface ColumnItemProps {
 }
 
 const ColumnItem = ({ data, index }: ColumnItemProps) => {
+  const { id, name } = data;
+  const columnFormatForJobAdd: ColumnFormatForJobAdd = { id, name };
   return (
     <Draggable draggableId={data.id} index={index}>
       {(provided, snapshot) => (
@@ -33,7 +35,7 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
                 data.cards.length > 0 && "mb-4",
               )}
             >
-              <CardAdd />
+              <CardAdd column={columnFormatForJobAdd}/>
             </div>
             <Droppable droppableId={data.id} type="card">
               {(provided, snapshot) => (

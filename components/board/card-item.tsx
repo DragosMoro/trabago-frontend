@@ -22,7 +22,7 @@ const CardItem = ({ data, index, color }: CardItemProps) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           role="button"
-          onClick={() => cardModal.onOpen(data.id)}
+          onClick={() => {}}
           className={`bg-${color} max-h-[130px] w-[297px] cursor-pointer rounded-[9px]`}
           style={{
             ...getStyle(provided.draggableProps.style, snapshot),
