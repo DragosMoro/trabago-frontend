@@ -43,6 +43,7 @@ import {
   useMutation,
   useQueryClient,
   QueryClientProvider,
+  useQuery,
 } from "@tanstack/react-query";
 
 const formSchema = z.object({
@@ -62,7 +63,6 @@ const formSchema = z.object({
 
 const AddJobModal = () => {
   const { isOpen, onClose, type, data } = useCardModal();
-  const [columns, setColumns] = useState<Column[]>([]);
   const isModalOpen = isOpen && type === "addJob";
   const { column } = data;
   const form = useForm({
@@ -92,21 +92,39 @@ const AddJobModal = () => {
   }),
     [form, column];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const columnsResponse = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
-        );
-        setColumns(columnsResponse.data);
-        console.log(columns);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const columnsResponse = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+  //       );
+  //       setColumns(columnsResponse.data);
+  //       console.log(columns);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+
+  const fetchColumns = async (query = ""): Promise<Column[]> => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+    );
+    const data = response.data;
+    return data;
+  };
+
+  const {
+    data: columns,
+    isLoading: isLoadingColumns,
+    error: columnsError,
+  } = useQuery({
+    queryKey: ["columns"],
+    queryFn: () => fetchColumns(),
+  });
+
   // console.log(columns);
   const isLoading = form.formState.isSubmitting;
 
@@ -299,7 +317,7 @@ const AddJobModal = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {Object.values(columns).map((column) => (
+                          {columns && columns.map((column) => (
                             <SelectItem
                               key={column.id}
                               value={column.name}
