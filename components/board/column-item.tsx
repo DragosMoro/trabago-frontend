@@ -6,6 +6,7 @@ import CardAdd from "./card-add";
 import { cn } from "@/lib/utils";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { getStyle } from "@/lib/dnd-style-function";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ColumnItemProps {
   data: ColumnWithCards;
@@ -16,16 +17,17 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
   const { id, name } = data;
   const columnFormatForJobAdd: ColumnFormatForJobAdd = { id, name };
   return (
+  
     <Draggable draggableId={data.id} index={index}>
       {(provided, snapshot) => (
         <li
           {...provided.draggableProps}
           ref={provided.innerRef}
-          className="h-full w-[320px]"
+          className="h-full w-[340px] "
           style={getStyle(provided.draggableProps.style, snapshot)}
         >
           <div
-            className="flex w-full flex-col items-center justify-center rounded-md border border-neutral-900 bg-zinc-950 pb-4 shadow-md"
+            className=" flex w-full flex-col items-center justify-center rounded-md border border-neutral-900 bg-zinc-950 pb-4 shadow-md "
             {...provided.dragHandleProps}
           >
             <ColumnHeader data={data} />
@@ -39,10 +41,11 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
             </div>
             <Droppable droppableId={data.id} type="card">
               {(provided, snapshot) => (
+                <ScrollArea className="px-2">
                 <ol
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="mx-1 flex flex-col gap-y-2 px-1 py-0.5"
+                  className="mx-1 flex flex-col gap-y-2 px-1 py-0.5 max-h-[596px]" 
                 >
                   {data.cards.map((elem, i) => (
                     <CardItem
@@ -60,6 +63,7 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
                     {provided.placeholder}
                   </div>
                 </ol>
+                </ScrollArea>
               )}
             </Droppable>
           </div>

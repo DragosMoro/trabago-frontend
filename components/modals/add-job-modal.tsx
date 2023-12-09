@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
-import qs from "query-string";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Dialog } from "@radix-ui/react-dialog";
@@ -32,13 +31,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Column, JobType, WorkMode } from "@/lib/types";
+import { Column } from "@/lib/types";
 import { Textarea } from "../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, Link } from "lucide-react";
 import { Calendar } from "../ui/calendar";
+import { JobType, WorkMode } from "@/lib/enums";
+import {
+  useMutation,
+  useQueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+
 const formSchema = z.object({
   company: z.string().min(1, "Company name is required"),
   position: z.string().min(1, "Position is required"),
@@ -59,7 +65,6 @@ const AddJobModal = () => {
   const [columns, setColumns] = useState<Column[]>([]);
   const isModalOpen = isOpen && type === "addJob";
   const { column } = data;
-  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,6 +80,9 @@ const AddJobModal = () => {
       workMode: WorkMode.Empty,
     },
   });
+
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     if (column) {
       form.setValue("column", column.name);
@@ -99,21 +107,20 @@ const AddJobModal = () => {
 
     fetchData();
   }, []);
-  console.log(columns);
+  // console.log(columns);
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const url = qs.stringifyUrl({
-        url: "/api/jobs",
-        query: {
-          columnId: column?.id,
-        },
+      const formattedDate = values.date
+        ? format(values.date, "dd MMM yyyy")
+        : null;
+      console.log(JSON.stringify({ ...values, date: formattedDate }));
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/jobs`, {
+        ...values,
+        date: formattedDate,
       });
-      console.log(values);
-      await axios.post(url, values);
       form.reset();
-      router.refresh();
       onClose();
     } catch (error) {
       console.log(error);
@@ -132,16 +139,29 @@ const AddJobModal = () => {
     }
   };
 
+  const mutation = useMutation({
+    mutationFn: onSubmit,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cards"],
+      });
+    },
+  });
+
+  const formSubmitHandler = (data: any) => {
+    mutation.mutate(data);
+  };
+
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className=" min-h-[700px] overflow-hidden text-zinc-300 dark:bg-zinc-950 md:max-w-7xl">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold text-zinc-200">
-            Add a new Job {column ? "in " + column.name : ""}
+            Add A New Job {column ? "in " + column.name : ""}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(formSubmitHandler)}>
             <div className="flex flex-col gap-7">
               {/* this is the first row */}
               <div className="flex justify-center gap-10">
@@ -230,6 +250,7 @@ const AddJobModal = () => {
                                 "w-[230px] pl-3 text-left font-normal",
                                 !field.value && "text-muted-foreground",
                               )}
+                              disabled={isLoading}
                             >
                               {field.value ? (
                                 format(field.value, "PPP")
@@ -258,6 +279,43 @@ const AddJobModal = () => {
                   )}
                 />
 
+                {/* this is the select column select box  */}
+                <FormField
+                  control={form.control}
+                  name="column"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-md ml-1">
+                        Select Column *
+                      </FormLabel>
+                      <Select
+                        disabled={isLoading}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="w-[230px]">
+                          <SelectTrigger className="capitalize">
+                            <SelectValue placeholder="Select a column" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {Object.values(columns).map((column) => (
+                            <SelectItem
+                              key={column.id}
+                              value={column.name}
+                              className="capitalize"
+                            >
+                              {column.name.toLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 {/* this is the URL field */}
                 <FormField
                   control={form.control}
@@ -271,6 +329,7 @@ const AddJobModal = () => {
                             variant="ghost"
                             onClick={onLinkClick}
                             className="ml-1 h-6 w-6 px-0 py-0"
+                            disabled={isLoading}
                           >
                             <Link className="h-3 w-3" />
                           </Button>
@@ -288,28 +347,7 @@ const AddJobModal = () => {
                     </FormItem>
                   )}
                 />
-
-                {/* this is the salary field */}
-                <FormField
-                  control={form.control}
-                  name="salary"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-md ml-1">Salary</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={isLoading}
-                          className="w-[230px]"
-                          placeholder="Enter The Salary"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
-
               {/* this is the third row */}
               <div className="flex justify-center gap-10">
                 {/* this is the job type select box  */}
@@ -383,38 +421,21 @@ const AddJobModal = () => {
                   )}
                 />
 
-                {/* this is the select column select box  */}
+                {/* this is the salary field */}
                 <FormField
                   control={form.control}
-                  name="column"
+                  name="salary"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">
-                        Select Column
-                      </FormLabel>
-                      <Select
-                        disabled={isLoading}
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl className="w-[230px]">
-                          <SelectTrigger className="capitalize">
-                            <SelectValue placeholder="Select a column" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {Object.values(columns).map((column) => (
-                            <SelectItem
-                              key={column.id}
-                              value={column.name}
-                              className="capitalize"
-                            >
-                              {column.name.toLowerCase()}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
+                      <FormLabel className="text-md ml-1">Salary</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          className="w-[230px]"
+                          placeholder="Enter The Salary"
+                          {...field}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -447,7 +468,9 @@ const AddJobModal = () => {
             <DialogFooter className="pt-[28px]">
               <Button
                 disabled={isLoading}
-                className="ml-auto mr-auto h-[50px] w-[150px] border bg-zinc-950 text-zinc-100 transition-all hover:bg-zinc-900 "
+                className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-zinc-950 text-zinc-100 
+              transition ease-out hover:bg-zinc-900 hover:ease-in
+                "
               >
                 Add Job
               </Button>

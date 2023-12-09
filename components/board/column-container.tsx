@@ -6,6 +6,9 @@ import ColumnItem from "./column-item";
 import axios from "axios";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { ScrollArea } from "../ui/scroll-area";
+import { useQuery } from "@tanstack/react-query";
+import CardItem from "./card-item";
+import ColumnAdd from "./column-add";
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
@@ -16,47 +19,80 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 }
 
 const ColumnContainer = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [cards, setCards] = useState<Card[]>([]);
   const [columnsWithCards, setColumnsWithCards] = useState<ColumnWithCards[]>(
     [],
   );
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const columnsResponse = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+  //       );
+  //       setColumns(columnsResponse.data);
+  //       console.log(columnsResponse.data);
+  //       const cardsResponse = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
+  //       );
+  //       setCards(cardsResponse.data);
+  //       console.log(cardsResponse.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  const fetchCards = async (query = ""): Promise<Card[]> => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
+    );
+    const data = response.data;
+    return data;
+  };
+
+  const {
+    data: cards,
+    isLoading: isLoadingCards,
+    error: cardsError,
+  } = useQuery({
+    queryKey: ["cards"],
+    queryFn: () => fetchCards(),
+  });
+
+  const fetchColumns = async (query = ""): Promise<Column[]> => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+    );
+    const data = response.data;
+    return data;
+  };
+
+  const {
+    data: columns,
+    isLoading: isLoadingColumns,
+    error: columnsError,
+  } = useQuery({
+    queryKey: ["columns"],
+    queryFn: () => fetchColumns(),
+  });
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const columnsResponse = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
-        );
-        setColumns(columnsResponse.data);
-        console.log(columnsResponse.data);
-        const cardsResponse = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
-        );
-        setCards(cardsResponse.data);
-        console.log(cardsResponse.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (cards && columns) {
+      const combinedData = columns.map((column) => ({
+        ...column,
+        cards: cards
+          .filter((card) => card.jobColumn.id === column.id)
+          .sort((a, b) => a.order - b.order),
+      }));
+      combinedData.sort((a, b) => a.order - b.order);
 
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const combinedData = columns.map((column) => ({
-      ...column,
-      cards: cards.filter((card) => card.jobColumn.id === column.id),
-    }));
-
-    // Sortare după order
-    combinedData.sort((a, b) => a.order - b.order);
-
-    setColumnsWithCards(combinedData);
+      setColumnsWithCards(combinedData);
+    }
   }, [columns, cards]);
 
   const updateColumnOrder = async (items: Column[]) => {
@@ -175,7 +211,9 @@ const ColumnContainer = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoadingCards || isLoadingColumns) return <div>Loading...</div>;
+
+  if (cardsError || columnsError) return <div>Error...</div>;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -184,11 +222,14 @@ const ColumnContainer = () => {
           <ol
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="flex h-full gap-3 ml-10 mt-8"
+            className="ml-10 mt-8 flex h-full gap-3"
           >
             {columnsWithCards.map((column, i) => (
               <ColumnItem key={column.id} index={i} data={column} />
             ))}
+            {provided.placeholder}
+            <ColumnAdd />
+            <div className="flex-shrink-0 w-1" />
           </ol>
         )}
       </Droppable>

@@ -3,6 +3,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "sonner";
+import { ModalProvider } from "@/components/providers/modal-provider";
+import QueryProvider from "@/components/providers/query-provider";
+import { DayPickerProps, DayPickerProvider } from "react-day-picker";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -24,7 +28,12 @@ export default function RootLayout({
           enableSystem={false}
           storageKey="trabago-theme"
         >
-          {children}
+          <QueryProvider>
+            <Toaster />
+            <ModalProvider />
+
+            {children}
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

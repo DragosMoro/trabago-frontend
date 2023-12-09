@@ -11,29 +11,12 @@ import {
   CommandList,
 } from "../ui/command";
 import { Button } from "../ui/button";
+import { useCardModal } from "@/hooks/use-modal-store";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
-  const router = useRouter();
-
-  const params = useParams();
-
-  const onClick = ({
-    id,
-    type,
-  }: {
-    id: string;
-    type: "channel" | "member";
-  }) => {
-    setOpen(false);
-    if (type === "member") {
-      router.push(`/servers/${params?.serverId}/conversations/${id}`);
-    }
-    if (type === "channel") {
-      router.push(`/servers/${params?.serverId}/channels/${id}`);
-    }
-  };
+  const { onOpen } = useCardModal();
 
   return (
     <div className="mb-2 h-[70px] w-full border-b bg-zinc-50 dark:bg-zinc-950">
@@ -65,8 +48,11 @@ const Navbar = () => {
               </CommandGroup>
             </CommandList>
           </CommandDialog>
-          <Button className="max-h-[35px]  max-w-[150px] border bg-zinc-900 text-zinc-100 transition-all hover:bg-zinc-800 lg:w-[150px]">
-            + Add Job
+          <Button
+            className="max-h-[35px]  max-w-[150px] border bg-zinc-900 text-zinc-100 transition-all hover:bg-zinc-800 lg:w-[150px]"
+            onClick={() => onOpen("addJob")}
+          >
+            Add Job
           </Button>
         </div>
       </div>
