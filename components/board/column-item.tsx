@@ -37,7 +37,7 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
                 data.cards.length > 0 && "mb-4",
               )}
             >
-              <CardAdd column={columnFormatForJobAdd}/>
+              <CardAdd columnFormat={columnFormatForJobAdd}/>
             </div>
             <Droppable droppableId={data.id} type="card">
               {(provided, snapshot) => (

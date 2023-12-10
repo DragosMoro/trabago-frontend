@@ -29,7 +29,17 @@ export default function RootLayout({
           storageKey="trabago-theme"
         >
           <QueryProvider>
-            <Toaster />
+            <Toaster
+              toastOptions={{
+                style: {
+                  background: "#09090b",
+                  color: "#fff",
+                  border: "1px solid #333333"
+                  
+                },
+                className: "class",
+              }}
+            />
             <ModalProvider />
 
             {children}

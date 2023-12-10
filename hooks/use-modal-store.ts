@@ -5,8 +5,9 @@ import { create } from "zustand";
 export type ModalType = "addJob" | "editJob" | "deleteJob" | "addColumn" | "editColumn" | "deleteColumn";
 
 interface ModalData{
-  column?: Column | ColumnFormatForJobAdd;
+  column?: Column ;
   card?: Card;
+  columnFormat?: ColumnFormatForJobAdd
   
 }
 

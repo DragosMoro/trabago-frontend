@@ -5,15 +5,17 @@ import { MoreVertical, X } from "lucide-react";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Column } from "@/lib/types";
 import { Separator } from "../ui/separator";
+import { useCardModal } from "@/hooks/use-modal-store";
 
 interface ColumnOptionsProps {
   data: Column;
-
 }
 
-const ColumnOptions = ({ data}: ColumnOptionsProps) => {
+const ColumnOptions = ({ data }: ColumnOptionsProps) => {
   const closeRef = useRef<ElementRef<"button">>(null);
-
+  const { onOpen } = useCardModal();
+  const { name, id } = data;
+  const columnForAdd= { id, name};
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -21,7 +23,7 @@ const ColumnOptions = ({ data}: ColumnOptionsProps) => {
           <MoreVertical className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="px-0 pb-3 pt-3" side="bottom" align="start">
+      <PopoverContent className="px-0 pb-3 pt-3 max-w-[240px]" side="bottom" align="start">
         <div className="pb-4 text-center text-sm font-medium text-neutral-600">
           Column Actions
         </div>
@@ -34,14 +36,14 @@ const ColumnOptions = ({ data}: ColumnOptionsProps) => {
           </Button>
         </PopoverClose>
         <Button
-          onClick={() => {}}
+          onClick={() => onOpen("editColumn", { column: data })}
           className="h-auto w-full justify-start rounded-none p-2 px-5 text-sm font-normal"
           variant="ghost"
         >
-          Modify Column  
+          Edit Column
         </Button>
         <Button
-          onClick={() => {}}
+          onClick={() => onOpen("deleteColumn", { column: data })}
           className="h-auto w-full justify-start rounded-none p-2 px-5 text-sm font-normal"
           variant="ghost"
         >
@@ -49,11 +51,11 @@ const ColumnOptions = ({ data}: ColumnOptionsProps) => {
         </Button>
         <Separator />
         <Button
-          onClick={() => {}}
+          onClick={() => onOpen("addJob", { columnFormat: columnForAdd })}
           className="h-auto w-full justify-start rounded-none p-2 px-5 text-sm font-normal"
           variant="ghost"
         >
-          Add Card
+          Add Job
         </Button>
       </PopoverContent>
     </Popover>

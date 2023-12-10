@@ -31,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Column } from "@/lib/types";
+
 import { Textarea } from "../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
@@ -58,6 +58,8 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Column } from "@/lib/types";
 
 const formSchema = z.object({
   company: z.string().min(1, "Company name is required"),
@@ -77,7 +79,7 @@ const formSchema = z.object({
 const AddJobModal = () => {
   const { isOpen, onClose, type, data } = useCardModal();
   const isModalOpen = isOpen && type === "addJob";
-  const { column } = data;
+  const { columnFormat } = data;
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,7 +87,7 @@ const AddJobModal = () => {
       position: "",
       location: "",
       description: "",
-      column: column ? column.name : "",
+      column: columnFormat ? columnFormat.name : "",
       date: new Date(),
       salary: "",
       url: "",
@@ -97,29 +99,13 @@ const AddJobModal = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (column) {
-      form.setValue("column", column.name);
+    if (columnFormat) {
+      form.setValue("column", columnFormat.name);
     } else {
       form.setValue("column", "");
     }
   }),
-    [form, column];
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const columnsResponse = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
-  //       );
-  //       setColumns(columnsResponse.data);
-  //       console.log(columns);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+    [form, columnFormat];
 
   const fetchColumns = async (query = ""): Promise<Column[]> => {
     const response = await axios.get(
@@ -140,7 +126,6 @@ const AddJobModal = () => {
 
   // console.log(columns);
   const isLoading = form.formState.isSubmitting;
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const formattedDate = values.date
@@ -153,8 +138,21 @@ const AddJobModal = () => {
       });
       form.reset();
       onClose();
-    } catch (error) {
+      toast.success("The job has been added successfully."); 
+    } catch (error: any) {
       console.log(error);
+      if (error.response) {
+       
+        toast.error(`Error: ${error.response.data}. Please try again.`);
+      } else if (error.request) {
+       
+        toast.error(
+          "No response from server. Please check your connection and try again.",
+        );
+      } else {
+       
+        toast.error(`Error: ${error.message}. Please try again.`);
+      }
     }
   };
 
@@ -188,7 +186,7 @@ const AddJobModal = () => {
       <DialogContent className=" min-h-[700px] overflow-hidden text-zinc-300 dark:bg-zinc-950 md:max-w-5xl">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold text-zinc-200">
-            Add A New Job {column ? "in " + column.name : ""}
+            Add A New Job {columnFormat ? "in " + columnFormat.name : ""}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -316,7 +314,7 @@ const AddJobModal = () => {
                   )}
                 />
 
-                {/* this is the select column select box  */}
+                {/* this is the select columnFormat select box  */}
                 <FormField
                   control={form.control}
                   name="column"
@@ -333,18 +331,18 @@ const AddJobModal = () => {
                       >
                         <FormControl className="w-[230px]">
                           <SelectTrigger className="capitalize">
-                            <SelectValue placeholder="Select a column" />
+                            <SelectValue placeholder="Select A Column" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           {columns &&
-                            columns.map((column) => (
+                            columns.map((columnFormat) => (
                               <SelectItem
-                                key={column.id}
-                                value={column.name}
+                                key={columnFormat.id}
+                                value={columnFormat.name}
                                 className="capitalize"
                               >
-                                {column.name.toLowerCase()}
+                                {columnFormat.name.toLowerCase()}
                               </SelectItem>
                             ))}
                         </SelectContent>
