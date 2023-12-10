@@ -229,7 +229,7 @@ const ColumnContainer = () => {
             ))}
             {provided.placeholder}
             <ColumnAdd />
-            <div className="flex-shrink-0 w-1" />
+            <div className="w-1 flex-shrink-0" />
           </ol>
         )}
       </Droppable>

@@ -6,8 +6,8 @@ import * as z from "zod";
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { Dialog } from "@radix-ui/react-dialog";
+
 import {
   DialogContent,
   DialogFooter,
@@ -36,7 +36,20 @@ import { Textarea } from "../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Link } from "lucide-react";
+import {
+  ArrowUpRightFromCircle,
+  Briefcase,
+  Building2,
+  CalendarCheck,
+  CalendarIcon,
+  Clipboard,
+  Home,
+  KanbanSquare,
+  Link,
+  LucideUserSquare,
+  MapPin,
+  Wallet2,
+} from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { JobType, WorkMode } from "@/lib/enums";
 import {
@@ -172,7 +185,7 @@ const AddJobModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className=" min-h-[700px] overflow-hidden text-zinc-300 dark:bg-zinc-950 md:max-w-7xl">
+      <DialogContent className=" min-h-[700px] overflow-hidden text-zinc-300 dark:bg-zinc-950 md:max-w-5xl">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold text-zinc-200">
             Add A New Job {column ? "in " + column.name : ""}
@@ -189,7 +202,8 @@ const AddJobModal = () => {
                   name="company"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <Building2 className="mr-2 h-4 w-4" />
                         Company Name *
                       </FormLabel>
                       <FormControl>
@@ -211,7 +225,8 @@ const AddJobModal = () => {
                   name="position"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <Briefcase className="mr-2 h-4 w-4" />
                         Job Position *
                       </FormLabel>
                       <FormControl>
@@ -233,7 +248,10 @@ const AddJobModal = () => {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">Location *</FormLabel>
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <MapPin className="mr-2 h-4 w-4" />
+                        Location *
+                      </FormLabel>
                       <FormControl>
                         <Input
                           disabled={isLoading}
@@ -256,7 +274,8 @@ const AddJobModal = () => {
                   name="date"
                   render={({ field }) => (
                     <FormItem className="flex flex-col ">
-                      <FormLabel className="text-md ml-1">
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <CalendarCheck className="mr-2 h-4 w-4" />
                         Applied On *
                       </FormLabel>
                       <Popover>
@@ -303,7 +322,8 @@ const AddJobModal = () => {
                   name="column"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <KanbanSquare className="mr-2 h-4 w-4" />
                         Select Column *
                       </FormLabel>
                       <Select
@@ -317,15 +337,16 @@ const AddJobModal = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {columns && columns.map((column) => (
-                            <SelectItem
-                              key={column.id}
-                              value={column.name}
-                              className="capitalize"
-                            >
-                              {column.name.toLowerCase()}
-                            </SelectItem>
-                          ))}
+                          {columns &&
+                            columns.map((column) => (
+                              <SelectItem
+                                key={column.id}
+                                value={column.name}
+                                className="capitalize"
+                              >
+                                {column.name.toLowerCase()}
+                              </SelectItem>
+                            ))}
                         </SelectContent>
                       </Select>
 
@@ -341,16 +362,16 @@ const AddJobModal = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        <div className="ml-1">
-                          <span className="text-[16px]">URL</span>
+                        <div className="text-md ml-1 flex items-center">
                           <Button
                             variant="ghost"
                             onClick={onLinkClick}
-                            className="ml-1 h-6 w-6 px-0 py-0"
+                            className="mr-1 h-6 w-6 px-0 py-0"
                             disabled={isLoading}
                           >
                             <Link className="h-3 w-3" />
                           </Button>
+                          <span className="text-[16px]">URL</span>
                         </div>
                       </FormLabel>
                       <FormControl>
@@ -374,7 +395,10 @@ const AddJobModal = () => {
                   name="jobType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">Job Type</FormLabel>
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <LucideUserSquare className="mr-2 h-4 w-4" />
+                        Job Type
+                      </FormLabel>
                       <Select
                         disabled={isLoading}
                         onValueChange={field.onChange}
@@ -410,7 +434,10 @@ const AddJobModal = () => {
                   name="workMode"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">Work Mode</FormLabel>
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <Home className="mr-2 h-4 w-4" />
+                        Work Mode
+                      </FormLabel>
                       <Select
                         disabled={isLoading}
                         onValueChange={field.onChange}
@@ -445,7 +472,10 @@ const AddJobModal = () => {
                   name="salary"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">Salary</FormLabel>
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <Wallet2 className="mr-2 h-4 w-4" />
+                        Salary
+                      </FormLabel>
                       <FormControl>
                         <Input
                           disabled={isLoading}
@@ -467,7 +497,8 @@ const AddJobModal = () => {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-md ml-1">
+                      <FormLabel className="text-md ml-1 flex items-center">
+                        <Clipboard className="mr-2 h-4 w-4" />
                         Job Description
                       </FormLabel>
                       <FormControl>

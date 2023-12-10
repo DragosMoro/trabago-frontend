@@ -10,7 +10,7 @@ import dummyColumn, { cards } from "@/lib/dummy-data";
 
 export default function Home() {
   return (
-    <div className="flex flex-row">
+    <div className="pt-[70px]">
         <ColumnContainer/>
       </div>
   );
