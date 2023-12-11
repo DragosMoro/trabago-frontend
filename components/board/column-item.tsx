@@ -23,7 +23,7 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
         <li
           {...provided.draggableProps}
           ref={provided.innerRef}
-          className="h-full min-w-[330px] "
+          className="h-full min-w-[330px]"
           style={getStyle(provided.draggableProps.style, snapshot)}
         >
           <div

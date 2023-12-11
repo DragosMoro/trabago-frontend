@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import ColorPicker from "../color-picker";
 import { KanbanSquare, Palette } from "lucide-react";
+import { toast } from "sonner";
 
 const AddColumnModal = () => {
   const [selectedColor, setSelectedColor] = useState("");
@@ -56,8 +57,20 @@ const AddColumnModal = () => {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/jobColumn`, values);
       form.reset();
       onClose();
-    } catch (error) {
+      toast.success("The column has been added successfully."); // Add success toast
+    } catch (error: any) {
       console.log(error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        toast.error(`${error.response.data}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        toast.error("No response from server. Please check your connection and try again.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        toast.error(`${error.message}`);
+      }
     }
   };
 

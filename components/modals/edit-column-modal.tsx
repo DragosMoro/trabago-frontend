@@ -83,15 +83,13 @@ const EditColumnModal = () => {
       toast.success("The column has been updated successfully.");
     } catch (error: any) {
       if (error.response) {
-        toast.error(
-          "Column name already exists. Please choose a different name.",
-        );
+        toast.error(`${error.response.data}`);
       } else if (error.request) {
         toast.error(
           "No response from server. Please check your connection and try again.",
         );
       } else {
-        toast.error(`Error: ${error.message}. Please try again.`);
+        toast.error(`${error.message}`);
       }
     }
   };
