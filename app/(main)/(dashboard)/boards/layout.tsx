@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar/navbar";
 import MobileSidebar from "@/components/sidebar-menu/mobile-sidebar";
 import Sidebar from "@/components/sidebar-menu/sidebar";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const BoardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full">
       <Navbar />
@@ -15,4 +15,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default BoardLayout;
