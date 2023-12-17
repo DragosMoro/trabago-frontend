@@ -83,7 +83,7 @@ const SignIn = () => {
   };
 
   if(isLoggedIn) {
-    router.push("/");
+    router.push("/boards");
   }
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center ">

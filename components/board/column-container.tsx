@@ -9,6 +9,9 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useQuery } from "@tanstack/react-query";
 import CardItem from "./card-item";
 import ColumnAdd from "./column-add";
+import { useAuth } from "../providers/auth-provider";
+import { useRouter } from "next/navigation";
+import { bearerAuth } from "@/lib/auth/auth-utils";
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
@@ -22,34 +25,19 @@ const ColumnContainer = () => {
   const [columnsWithCards, setColumnsWithCards] = useState<ColumnWithCards[]>(
     [],
   );
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const columnsResponse = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
-  //       );
-  //       setColumns(columnsResponse.data);
-  //       console.log(columnsResponse.data);
-  //       const cardsResponse = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
-  //       );
-  //       setCards(cardsResponse.data);
-  //       console.log(cardsResponse.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
+  const router = useRouter();
+  const Auth = useAuth();
+  const user = Auth?.getUser();
+  if (!user) {
+    router.push("/signin");
+    throw new Error("User is not authenticated");
+  }
   const fetchCards = async (query = ""): Promise<Card[]> => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
+      {
+        headers: { Authorization: bearerAuth(user) },
+      },
     );
     const data = response.data;
     return data;
@@ -67,6 +55,9 @@ const ColumnContainer = () => {
   const fetchColumns = async (query = ""): Promise<Column[]> => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+      {
+        headers: { Authorization: bearerAuth(user) },
+      },
     );
     const data = response.data;
     return data;
@@ -100,6 +91,9 @@ const ColumnContainer = () => {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/updateOrder`,
         items,
+        {
+          headers: { Authorization: bearerAuth(user) },
+        },
       );
       console.log(response.data);
     } catch (error) {
@@ -112,6 +106,9 @@ const ColumnContainer = () => {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/jobs/updateOrder`,
         items,
+        {
+          headers: { Authorization: bearerAuth(user) },
+        },
       );
       console.log(response.data);
     } catch (error) {

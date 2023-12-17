@@ -10,11 +10,8 @@ interface User {
   accessToken: string;
 }
 
-interface AuthContextType {
-  userLogin: (user: User) => void;
-}
 
-function OAuth2Redirect() {
+const OAuth2Redirect = () => { {
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
@@ -32,14 +29,6 @@ function OAuth2Redirect() {
     const token = params.get("token");
     if (token) {
       console.log("Acces_oauth:  " + token);
-      if (Array.isArray(token)) {
-        // If token is an array, handle this case
-        // For example, you can take the first element of the array
-        handleLogin(token[0]);
-      } else {
-        // If token is not an array, you can pass it directly to handleLogin
-        handleLogin(token);
-      }
       const redirect = "/boards";
       setRedirectTo(redirect);
     } else {
@@ -63,5 +52,7 @@ function OAuth2Redirect() {
     }
   }, [redirectTo]);
 }
+  return null;
+};
 
 export default OAuth2Redirect;

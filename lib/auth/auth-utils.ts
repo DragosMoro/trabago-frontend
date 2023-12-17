@@ -1,3 +1,7 @@
+interface User {
+  data: any;
+  accessToken: string;
+}
 export function parseJwt(token: string | null): any {
   if (!token) {
     return;
@@ -19,4 +23,8 @@ export const handleLogError = (error: any): void => {
   } else {
     console.log(error.message);
   }
+};
+
+export const bearerAuth = (user: User) => {
+  return `Bearer ${user.accessToken}`;
 };

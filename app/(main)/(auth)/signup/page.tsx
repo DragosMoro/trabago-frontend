@@ -83,7 +83,7 @@ const SignUp = () => {
   };
 
   if (isLoggedIn) {
-    router.push("/");
+    router.push("/boards");
   }
 
   return (

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosError } from "axios"; // adjust the path to your jwt helper function as needed
+import axios, { AxiosError } from "axios";
 import { parseJwt } from "./auth/auth-utils";
 
 const instance = axios.create({
@@ -10,7 +10,7 @@ instance.interceptors.request.use(
     if (typeof config.headers.Authorization === "string") {
       const token = config.headers.Authorization.split(" ")[1];
       const data = parseJwt(token);
-      if (Date.now() > data.exp * 1000) {
+      if (Date.now() > data.exp * 100000) {
         window.location.href = "/signin";
       }
     }
