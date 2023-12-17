@@ -1,9 +1,16 @@
+"use client"
 import Image from "next/image";
 
 import { SidebarRoutes } from "./sidebar-routes";
 import { ModeToggle } from "../ui/mode-toggle";
+import { useAuth } from "../providers/auth-provider";
+
 
 const Sidebar = () => {
+  const Auth = useAuth();
+  const user = Auth?.getUser();
+  console.log(user);
+
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white dark:bg-zinc-950">
       <div className="ml-auto mr-auto flex gap-2 pb-10 pt-6">

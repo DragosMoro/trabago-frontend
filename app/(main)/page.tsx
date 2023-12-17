@@ -6,11 +6,11 @@ const MainPage = () => {
     const router = useRouter();
 
     const handleLoginClick = () => {
-        router.push('/login');
+        router.push('/signin');
     };
 
     const handleRegisterClick = () => {
-        router.push('/register');
+        router.push('/signup');
     };
 
     return (

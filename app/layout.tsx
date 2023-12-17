@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import QueryProvider from "@/components/providers/query-provider";
 import { DayPickerProps, DayPickerProvider } from "react-day-picker";
+import { AuthProvider } from "@/components/providers/auth-provider";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -23,28 +24,29 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(font.className, "bg-zinc-50 dark:bg-black")}>
-        <ThemeProvider
-          attribute="class"
-          enableSystem={false}
-          storageKey="trabago-theme"
-        >
-          <QueryProvider>
-            <Toaster
-              toastOptions={{
-                style: {
-                  background: "#09090b",
-                  color: "#fff",
-                  border: "1px solid #333333"
-                  
-                },
-                className: "class",
-              }}
-            />
-            <ModalProvider />
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            enableSystem={false}
+            storageKey="trabago-theme"
+          >
+            <QueryProvider>
+              <Toaster
+                toastOptions={{
+                  style: {
+                    background: "#09090b",
+                    color: "#fff",
+                    border: "1px solid #333333",
+                  },
+                  className: "class",
+                }}
+              />
+              <ModalProvider />
 
-            {children}
-          </QueryProvider>
-        </ThemeProvider>
+              {children}
+            </QueryProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
