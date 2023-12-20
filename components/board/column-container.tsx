@@ -28,19 +28,23 @@ const ColumnContainer = () => {
   const router = useRouter();
   const Auth = useAuth();
   const user = Auth?.getUser();
-  if (!user) {
-    router.push("/signin");
-    throw new Error("User is not authenticated");
-  }
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
   const fetchCards = async (query = ""): Promise<Card[]> => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
-      {
-        headers: { Authorization: bearerAuth(user) },
-      },
-    );
-    const data = response.data;
-    return data;
+    if (user) {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/jobs/getAll`,
+        {
+          headers: { Authorization: bearerAuth(user) },
+        },
+      );
+      const data = response.data;
+      return data;
+    }
+    return [];
   };
 
   const {
@@ -53,14 +57,17 @@ const ColumnContainer = () => {
   });
 
   const fetchColumns = async (query = ""): Promise<Column[]> => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
-      {
-        headers: { Authorization: bearerAuth(user) },
-      },
-    );
-    const data = response.data;
-    return data;
+    if (user) {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+        {
+          headers: { Authorization: bearerAuth(user) },
+        },
+      );
+      const data = response.data;
+      return data;
+    }
+    return [];
   };
 
   const {
@@ -88,14 +95,16 @@ const ColumnContainer = () => {
 
   const updateColumnOrder = async (items: Column[]) => {
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/updateOrder`,
-        items,
-        {
-          headers: { Authorization: bearerAuth(user) },
-        },
-      );
-      console.log(response.data);
+      if (user) {
+        const response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/updateOrder`,
+          items,
+          {
+            headers: { Authorization: bearerAuth(user) },
+          },
+        );
+        console.log(response.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -103,14 +112,16 @@ const ColumnContainer = () => {
 
   const updateCardOrder = async (items: Card[]) => {
     try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/jobs/updateOrder`,
-        items,
-        {
-          headers: { Authorization: bearerAuth(user) },
-        },
-      );
-      console.log(response.data);
+      if (user) {
+        const response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/jobs/updateOrder`,
+          items,
+          {
+            headers: { Authorization: bearerAuth(user) },
+          },
+        );
+        console.log(response.data);
+      }
     } catch (error) {
       console.log(error);
     }

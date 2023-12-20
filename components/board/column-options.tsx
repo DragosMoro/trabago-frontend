@@ -24,12 +24,12 @@ const ColumnOptions = ({ data }: ColumnOptionsProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="px-0 pb-3 pt-3 max-w-[240px]" side="bottom" align="start">
-        <div className="pb-4 text-center text-sm font-medium text-neutral-600">
+        <div className="pb-4 text-center text-sm font-medium text-neutral-400">
           Column Actions
         </div>
         <PopoverClose ref={closeRef} asChild>
           <Button
-            className="absolute right-2 top-2 h-auto w-auto p-2 text-neutral-600"
+            className="absolute right-2 top-2 h-auto w-auto p-2 text-neutral-400"
             variant="ghost"
           >
             <X className="h-4 w-4" />

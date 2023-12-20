@@ -50,7 +50,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     if (
       parsedUser &&
       parsedUser.data &&
-      Date.now() > parsedUser.data.exp * 1000
+      Date.now() > parsedUser.data.exp * 100000
     ) {
       userLogout();
       return false;

@@ -11,7 +11,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="flex h-full w-full items-center justify-between px-[50px]">
+    <div className="flex h-full w-full items-center justify-between px-[50px] xl:px-[100px]">
       <div className="flex max-w-[450px] flex-col">
         <div></div>
         <span className="mb-3 h-[53px] bg-gradient-to-tr from-white to-zinc-600 bg-clip-text text-5xl font-bold text-transparent">
@@ -46,7 +46,8 @@ const HeroSection = () => {
           width={750}
           height={750}
           alt="board"
-          className="relative z-10 rounded-lg shadow-xl shadow-zinc-900"
+          className="relative z-10 rounded-lg shadow-xl shadow-zinc-900 2xl:max-h-[950px] max-h-[750px]
+            2xl:w-[950px] w-[750px]"
         />
       </div>
     </div>

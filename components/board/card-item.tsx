@@ -31,14 +31,25 @@ const CardItem = ({ data, index, color }: CardItemProps) => {
         >
           <div className="ml-[3px] flex h-full w-full flex-col gap-3 rounded-md bg-zinc-900 px-4 py-3">
             <div className=" flex items-center gap-3">
-              <Image
-                loader={() => data.imageUrl}
-                src={data.imageUrl}
-                alt="Company Name"
-                width={20}
-                height={20}
-                className="rounded-sm"
-              />
+              {data.imageUrl === "" ? (
+                <Image
+                  src="/logo.png"
+                  alt="Company Name"
+                  width={20}
+                  height={20}
+                  className="rounded-sm"
+                />
+              ) : (
+                <Image
+                  loader={() => data.imageUrl}
+                  src={data.imageUrl}
+                  alt="Company Name"
+                  width={20}
+                  height={20}
+                  className="rounded-sm"
+                />
+              )}
+
               <span className="text-xl font-medium text-zinc-200">
                 {data.company}
               </span>

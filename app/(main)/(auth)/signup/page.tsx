@@ -52,6 +52,12 @@ const SignUp = () => {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signup`,
         values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json; charset=utf-8",
+          },
+        },
       );
 
       const { accessToken } = response.data;
@@ -72,10 +78,6 @@ const SignUp = () => {
   const registerRedirect = () => {
     router.push("/signin");
   };
-  const handleLoginWithGithub = () => {
-    const socialLoginUrl = getSocialLoginUrl("linkedin");
-    router.push(socialLoginUrl);
-  };
 
   const handleLoginWithGoogle = () => {
     const socialLoginUrl = getSocialLoginUrl("google");
@@ -93,13 +95,6 @@ const SignUp = () => {
           Sign Up
         </h1>
         <div className="flex flex-col gap-3 sm:gap-6">
-          <Button
-            className="flex w-[300px] items-center justify-center gap-2 bg-zinc-900/50 text-zinc-300 transition-all duration-300 hover:bg-zinc-900/80"
-            onClick={handleLoginWithGithub}
-          >
-            <FaGithub className="h-4 w-4 text-zinc-300" />
-            Continue with Github
-          </Button>
           <Button
             className="flex w-[300px] items-center justify-center gap-2 bg-zinc-900/50 text-zinc-300 transition-all duration-300 hover:bg-zinc-900/80"
             onClick={handleLoginWithGoogle}

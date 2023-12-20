@@ -2,7 +2,7 @@ import { Card, Column, ColumnFormatForJobAdd } from "@/lib/types";
 import { boolean } from "zod";
 import { create } from "zustand";
 
-export type ModalType = "addJob" | "editJob" | "deleteJob" | "addColumn" | "editColumn" | "deleteColumn";
+export type ModalType = "addJob" | "editJob" | "deleteJob" | "addColumn" | "editColumn" | "deleteColumn" | "logout";
 
 interface ModalData{
   column?: Column ;

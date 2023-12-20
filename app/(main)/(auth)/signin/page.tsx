@@ -45,23 +45,25 @@ const SignIn = () => {
   const isFormLoading = form.formState.isSubmitting;
   const [showPassword, setShowPassword] = useState(false);
 
-
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signin`,
         values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json; charset=utf-8",
+          },
+        },
       );
       const { accessToken } = response.data;
       const data = parseJwt(accessToken);
-      const authenticatedUser = {data, accessToken};
+      const authenticatedUser = { data, accessToken };
       Auth?.userLogin(authenticatedUser);
       toast.success("You have successfully logged in.");
       form.reset();
       router.push("/boards");
-
-      
     } catch (error: any) {
       console.log(error);
 
@@ -72,17 +74,13 @@ const SignIn = () => {
   const registerRedirect = () => {
     router.push("/signup");
   };
-  const handleLoginWithGithub = () => {
-    const socialLoginUrl = getSocialLoginUrl("linkedin");
-    router.push(socialLoginUrl);
-  };
 
   const handleLoginWithGoogle = () => {
     const socialLoginUrl = getSocialLoginUrl("google");
     router.push(socialLoginUrl);
   };
 
-  if(isLoggedIn) {
+  if (isLoggedIn) {
     router.push("/boards");
   }
   return (
@@ -92,13 +90,6 @@ const SignIn = () => {
           Sign In
         </h1>
         <div className="flex flex-col gap-6">
-          <Button
-            className="flex w-[300px] items-center justify-center gap-2 bg-zinc-900/50 text-zinc-300 transition-all duration-300 hover:bg-zinc-900/80"
-            onClick={handleLoginWithGithub}
-          >
-            <FaGithub className="h-4 w-4 text-zinc-300" />
-            Continue with Github
-          </Button>
           <Button
             className="flex w-[300px] items-center justify-center gap-2 bg-zinc-900/50 text-zinc-300 transition-all duration-300 hover:bg-zinc-900/80"
             onClick={handleLoginWithGoogle}

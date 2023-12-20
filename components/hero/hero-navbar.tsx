@@ -13,7 +13,7 @@ const HeroNavbar = () => {
     router.push("/signup");
   };
   return (
-    <div className="flex h-[100px] w-full items-center justify-between px-[50px]">
+    <div className="flex h-[100px] w-full items-center justify-between xl:px-[100px] px-[50px]">
       <div className="flex items-center gap-2">
         <Image
           height={70}

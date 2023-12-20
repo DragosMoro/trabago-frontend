@@ -60,6 +60,9 @@ import {
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Column } from "@/lib/types";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../providers/auth-provider";
+import { bearerAuth } from "@/lib/auth/auth-utils";
 
 const formSchema = z.object({
   company: z.string().min(1, "Company name is required"),
@@ -77,6 +80,14 @@ const formSchema = z.object({
 });
 
 const AddJobModal = () => {
+  const router = useRouter();
+  const Auth = useAuth();
+  const user = Auth?.getUser();
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
   const { isOpen, onClose, type, data } = useCardModal();
   const isModalOpen = isOpen && type === "addJob";
   const { columnFormat } = data;
@@ -101,18 +112,23 @@ const AddJobModal = () => {
   useEffect(() => {
     if (columnFormat) {
       form.setValue("column", columnFormat.name);
-    } else {
+    } else if (form.getValues("column") === "") {
       form.setValue("column", "");
     }
-  }),
-    [form, columnFormat];
+  }, [columnFormat, form]);
 
   const fetchColumns = async (query = ""): Promise<Column[]> => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
-    );
-    const data = response.data;
-    return data;
+    if (user) {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+        {
+          headers: { Authorization: bearerAuth(user) },
+        },
+      );
+      const data = response.data;
+      return data;
+    }
+    return [];
   };
 
   const {
@@ -132,25 +148,30 @@ const AddJobModal = () => {
         ? format(values.date, "dd MMM yyyy")
         : null;
       console.log(JSON.stringify({ ...values, date: formattedDate }));
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/jobs`, {
-        ...values,
-        date: formattedDate,
-      });
+      if (user) {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/jobs`,
+          {
+            ...values,
+            date: formattedDate,
+          },
+          {
+            headers: { Authorization: bearerAuth(user) },
+          },
+        );
+      }
       form.reset();
       onClose();
-      toast.success("The job has been added successfully."); 
+      toast.success("The job has been added successfully.");
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-       
         toast.error(`Error: ${error.response.data}. Please try again.`);
       } else if (error.request) {
-       
         toast.error(
           "No response from server. Please check your connection and try again.",
         );
       } else {
-       
         toast.error(`Error: ${error.message}. Please try again.`);
       }
     }
@@ -326,7 +347,9 @@ const AddJobModal = () => {
                       </FormLabel>
                       <Select
                         disabled={isLoading}
-                        onValueChange={field.onChange}
+                        onValueChange={(value) =>
+                          field.onChange({ target: { value } })
+                        }
                         defaultValue={field.value}
                       >
                         <FormControl className="w-[230px]">
@@ -352,7 +375,6 @@ const AddJobModal = () => {
                     </FormItem>
                   )}
                 />
-
                 {/* this is the URL field */}
                 <FormField
                   control={form.control}

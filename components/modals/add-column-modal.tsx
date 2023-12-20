@@ -24,14 +24,24 @@ import axios from "axios";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ColorPicker from "../color-picker";
 import { KanbanSquare, Palette } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../providers/auth-provider";
+import { bearerAuth } from "@/lib/auth/auth-utils";
 
 const AddColumnModal = () => {
   const [selectedColor, setSelectedColor] = useState("");
-
+  const router = useRouter();
+  const Auth = useAuth();
+  const user = Auth?.getUser();
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
   const formSchema = z.object({
     name: z.string().min(1, "Column name is required"),
     color: z.string().min(1, "Column color is required"),
@@ -53,21 +63,28 @@ const AddColumnModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log(values);
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/jobColumn`, values);
+      if (user) {
+        console.log(values);
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/jobColumn`,
+          values,
+          {
+            headers: { Authorization: bearerAuth(user) },
+          },
+        );
+      }
       form.reset();
       onClose();
-      toast.success("The column has been added successfully."); 
+      toast.success("The column has been added successfully.");
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-
         toast.error(`${error.response.data}`);
       } else if (error.request) {
-
-        toast.error("No response from server. Please check your connection and try again.");
+        toast.error(
+          "No response from server. Please check your connection and try again.",
+        );
       } else {
-
         toast.error(`${error.message}`);
       }
     }

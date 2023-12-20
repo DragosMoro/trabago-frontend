@@ -1,7 +1,7 @@
 "use client";
 
 import { useCardModal } from "@/hooks/use-modal-store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import {
@@ -14,8 +14,19 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { bearerAuth } from "@/lib/auth/auth-utils";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../providers/auth-provider";
 
 const DeleteColumnModal = () => {
+  const router = useRouter();
+  const Auth = useAuth();
+  const user = Auth?.getUser();
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
   const { isOpen, onClose, type, data } = useCardModal();
   const isModalOpen = isOpen && type === "deleteColumn";
   const { column } = data;
@@ -25,9 +36,14 @@ const DeleteColumnModal = () => {
   const onClick = async () => {
     setIsLoading(true);
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/${column?.id}`,
-      );
+      if (user) {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/${column?.id}`,
+          {
+            headers: { Authorization: bearerAuth(user) },
+          },
+        );
+      }
       onClose();
       toast.success("The column has been deleted successfully.");
     } catch (error: any) {
@@ -66,7 +82,7 @@ const DeleteColumnModal = () => {
           <DialogTitle className="text-center text-2xl font-bold">
             Delete Column
           </DialogTitle>
-          <DialogDescription className="text-center text-zinc-300 pt-4">
+          <DialogDescription className="pt-4 text-center text-zinc-300">
             Confirm deletion of column
             <span className="font-semibold text-white">
               {" "}
@@ -75,7 +91,7 @@ const DeleteColumnModal = () => {
             and all its jobs?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className=" px-6 py-4 mb-4">
+        <DialogFooter className=" mb-4 px-6 py-4">
           <div className="flex w-full items-center justify-center gap-4">
             <Button
               disabled={isLoading}

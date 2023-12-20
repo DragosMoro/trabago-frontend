@@ -30,8 +30,20 @@ import { KanbanSquare, Palette } from "lucide-react";
 import { Column } from "@/lib/types";
 import { toast } from "sonner";
 
+import { useAuth } from "../providers/auth-provider";
+import { bearerAuth } from "@/lib/auth/auth-utils";
+import { useRouter } from "next/navigation";
+
 const EditColumnModal = () => {
   const [selectedColor, setSelectedColor] = useState("");
+  const router = useRouter();
+  const Auth = useAuth();
+  const user = Auth?.getUser();
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
 
   const formSchema = z.object({
     name: z.string().min(1, "Column name is required"),
@@ -74,10 +86,15 @@ const EditColumnModal = () => {
       };
 
       console.log(JSON.stringify(updatedColumn));
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn`,
-        updatedColumn,
-      );
+      if (user) {
+        await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/jobColumn`,
+          updatedColumn,
+          {
+            headers: { Authorization: bearerAuth(user) },
+          },
+        );
+      }
       form.reset();
       onClose();
       toast.success("The column has been updated successfully.");
