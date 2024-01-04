@@ -1,6 +1,3 @@
-"use client";
-
-import { useCardModal } from "@/hooks/use-modal-store";
 import { Card } from "@/lib/types";
 import Image from "next/image";
 import { Draggable } from "@hello-pangea/dnd";
@@ -13,7 +10,6 @@ interface CardItemProps {
 }
 
 const CardItem = ({ data, index, color }: CardItemProps) => {
-  const cardModal = useCardModal();
   return (
     <Draggable draggableId={data.id} index={index}>
       {(provided, snapshot) => (
@@ -33,7 +29,7 @@ const CardItem = ({ data, index, color }: CardItemProps) => {
             <div className=" flex items-center gap-3">
               {data.imageUrl === "" ? (
                 <Image
-                  src="/logo.png"
+                  src="/logo.svg"
                   alt="Company Name"
                   width={20}
                   height={20}

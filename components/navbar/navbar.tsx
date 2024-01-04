@@ -19,7 +19,7 @@ const Navbar = () => {
   const { onOpen } = useCardModal();
 
   return (
-    <div className="fixed mb-2 h-[70px] w-full border-b bg-zinc-50 dark:bg-zinc-950">
+    <div className="mb-2 h-[70px] w-full border-b bg-zinc-50 dark:bg-zinc-950">
       <div className="flex h-full items-center justify-between px-5">
         <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-300">
           Job Board

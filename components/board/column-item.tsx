@@ -45,7 +45,7 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
                 <ol
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="mx-1 flex flex-col gap-y-2 px-1 py-0.5 max-h-[596px]" 
+                  className="mx-1 flex flex-col gap-y-2 px-1 py-0.5 2xl:max-h-[596px] max-h-[510px]" 
                 >
                   {data.cards.map((elem, i) => (
                     <CardItem

@@ -12,7 +12,7 @@ const routes = [
   {
     icon: KanbanSquare,
     label: "Board",
-    href: "/",
+    href: "/boards",
   },
   {
     icon: BarChartBig,

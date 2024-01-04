@@ -26,9 +26,9 @@ const SidebarUser = () => {
           <UserCircle2 className="h-6 w-6 " />
           <span>
             {/* {console.log(user.data)} */}
-            {user?.data.name.length > 20
+            {user?.data.name.length>1 ? (user?.data.name.length > 20
               ? user?.data.name.split(" ")[0]
-              : user?.data.name}
+              : user?.data.name) : "User Information"}
           </span>
         </div>
       </PopoverTrigger>
