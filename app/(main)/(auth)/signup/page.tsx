@@ -70,8 +70,11 @@ const SignUp = () => {
       toast.success("The user has been successfully registered.");
     } catch (error: any) {
       console.log(error);
-
-      toast.error(`${error.message}`);
+      if (error.response && error.response.status === 409) {
+        toast.error("User already exists.");
+      } else {
+        toast.error(`${error.message}`);
+      }
     }
   };
 

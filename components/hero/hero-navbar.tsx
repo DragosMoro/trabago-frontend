@@ -19,7 +19,7 @@ const HeroNavbar = () => {
           height={70}
           width={70}
           alt="logo"
-          src="/logo.png"
+          src="/logo.svg"
           className="z-10"
         />
         <span className="flex text-3xl font-bold text-black dark:text-white">

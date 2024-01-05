@@ -64,10 +64,18 @@ const AddColumnModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       if (user) {
-        console.log(values);
+        const { color, name } = values;
+        const userId = user.data.id;
+
+        const newValues = {
+          color,
+          name,
+          userId,
+        };
+
         await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/jobColumn`,
-          values,
+          newValues,
           {
             headers: { Authorization: bearerAuth(user) },
           },

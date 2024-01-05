@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import ColumnItem from "./column-item";
 import axios from "axios";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import { ScrollArea } from "../ui/scroll-area";
 import { useQuery } from "@tanstack/react-query";
-import CardItem from "./card-item";
 import ColumnAdd from "./column-add";
 import { useAuth } from "../providers/auth-provider";
 import { useRouter } from "next/navigation";
 import { bearerAuth } from "@/lib/auth/auth-utils";
+import LoadingPage from "@/app/(main)/(routes)/loading/page";
+import { useSearch } from "../providers/search-provider";
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
@@ -28,11 +28,17 @@ const ColumnContainer = () => {
   const router = useRouter();
   const Auth = useAuth();
   const user = Auth?.getUser();
+  const { searchValue } = useSearch();
+
   useEffect(() => {
     if (!user) {
       router.push("/");
     }
   }, [user]);
+
+  if (user) {
+    user.data.emai;
+  }
   const fetchCards = async (query = ""): Promise<Card[]> => {
     if (user) {
       const response = await axios.get(
@@ -59,7 +65,7 @@ const ColumnContainer = () => {
   const fetchColumns = async (query = ""): Promise<Column[]> => {
     if (user) {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAllByUser/${user.data.id}`,
         {
           headers: { Authorization: bearerAuth(user) },
         },
@@ -85,20 +91,29 @@ const ColumnContainer = () => {
         ...column,
         cards: cards
           .filter((card) => card.jobColumn.id === column.id)
+          .filter((card) =>
+            card.company.toLowerCase().includes(searchValue.toLowerCase()),
+          )
           .sort((a, b) => a.order - b.order),
       }));
       combinedData.sort((a, b) => a.order - b.order);
 
       setColumnsWithCards(combinedData);
     }
-  }, [columns, cards]);
+  }, [columns, cards, searchValue]);
 
   const updateColumnOrder = async (items: Column[]) => {
     try {
       if (user) {
+        const newItems = items.map(({ name, order, id, color }) => ({
+          name,
+          order,
+          id,
+          color,
+        }));
         const response = await axios.put(
           `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/updateOrder`,
-          items,
+          newItems,
           {
             headers: { Authorization: bearerAuth(user) },
           },
@@ -218,8 +233,9 @@ const ColumnContainer = () => {
       }
     }
   };
-
-  if (isLoadingCards || isLoadingColumns) return <div>Loading...</div>;
+  if (isLoadingCards || isLoadingColumns) {
+    return <LoadingPage />;
+  }
 
   if (cardsError || columnsError) return <div>Error...</div>;
 
@@ -230,7 +246,7 @@ const ColumnContainer = () => {
           <ol
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="ml-10 mt-8 flex h-full gap-3"
+            className="ml-10 mt-8 flex h-full gap-3 pt-[70px]"
           >
             {columnsWithCards.map((column, i) => (
               <ColumnItem key={column.id} index={i} data={column} />

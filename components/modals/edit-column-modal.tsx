@@ -79,11 +79,18 @@ const EditColumnModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const updatedColumn = {
-        ...column,
-        name: values.name,
-        color: values.color,
-      };
+      const { color, name } = values;
+      let updatedColumn;
+      if (column) {
+        const { order, id } = column;
+
+        updatedColumn = {
+          color,
+          name,
+          order,
+          id,
+        };
+      }
 
       console.log(JSON.stringify(updatedColumn));
       if (user) {

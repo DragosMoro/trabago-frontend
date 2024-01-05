@@ -47,6 +47,7 @@ const Resume = () => {
 
   const sendResume = async () => {
     if (uploadedFile) {
+      router.push("/loading");
       const response = await uploadFile(uploadedFile);
       const URL = qs.stringifyUrl({
         url: pathname + "/report",
