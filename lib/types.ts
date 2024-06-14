@@ -13,7 +13,7 @@ export type Column = {
 
 export type Card = {
   id: string;
-  company: string;
+  company: string; 
   position: string;
   location: string;
   date: string;
@@ -34,4 +34,11 @@ export type ColumnWithCards = Column & { cards: Card[] };
 export type ColumnFormatForJobAdd={
   id:string;
   name:string;
+}
+
+export type Course = {
+  courseUrl: string;
+  imageUrl: string;
+  instructorName: string;
+  title: string;
 }

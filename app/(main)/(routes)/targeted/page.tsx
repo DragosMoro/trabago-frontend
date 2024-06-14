@@ -1,36 +1,36 @@
 "use client";
 
 import { Dropzone } from "@/components/ui/dropzone";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import axios from "axios";
-import { usePathname, redirect, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import qs from "query-string";
 import { toast } from "sonner";
-const Resume = () => {
+import { Textarea } from "@/components/ui/textarea";
+const Statistics = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [jobDescription, setJobDescription] = useState("");
 
   const pathname = usePathname();
   const router = useRouter();
-  // Function to handle the change in uploaded files
+
   const handleFileChange = (file: File) => {
     setUploadedFile(file);
   };
 
-  async function uploadFile(file: File) {
+  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setJobDescription(event.target.value);
+  };
+
+  async function uploadFile(file: File, jobDescription: string) {
     const formData = new FormData();
     formData.append("file", file);
-
+    formData.append("job_description", jobDescription);
+  
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/resume/upload`,
+        `http://localhost:5000/analyze`,
         formData,
         {
           headers: {
@@ -46,12 +46,17 @@ const Resume = () => {
   }
 
   const sendResume = async () => {
+    if (jobDescription.length < 50) {
+      toast.info("Job description must be at least 50 characters long.");
+      return;
+    }
+  
     if (uploadedFile) {
       router.push("/loading");
-      const response = await uploadFile(uploadedFile);
+      const response = await uploadFile(uploadedFile, jobDescription);
       const URL = qs.stringifyUrl({
         url: pathname + "/report",
-        query: response,
+        query: { data: JSON.stringify(response) },
       });
       router.push(URL);
     } else {
@@ -71,21 +76,37 @@ const Resume = () => {
       }}
     >
       <div className="flex flex-col items-center justify-center gap-10 rounded-lg bg-zinc-900 px-6 py-6 dark:text-zinc-200">
-        <h1 className="text-md font-semibold capitalize md:text-xl lg:text-2xl xl:text-3xl">
-          Upload your resume
-        </h1>
-        <Dropzone
-          onChange={handleFileChange}
-          className="w-[250px] md:w-[440px] lg:w-[700px] h-[200px] md:h-[140px] lg:h-[180px]"
-          fileExtension="pdf"
-        />
+        <h1 className="pb-4 text-3xl font-semibold">Targeted Job Resume</h1>
+        <div className="flex gap-10">
+          <div className="flex flex-col gap-3">
+            <span className="text-md text-center font-medium capitalize">
+              Upload the job description
+            </span>
+            <Textarea
+              placeholder="Please ensure your input contains more than 50 characters."
+              className="h-[300px] w-[400px] resize-none bg-zinc-800"
+              onChange={handleTextChange}
+            />
+          </div>
+
+          <div className="flex flex-col items-center justify-center gap-3">
+            <span className="text-md text-center font-medium capitalize">
+              Upload your resume
+            </span>
+            <Dropzone
+              onChange={handleFileChange}
+              className="h-[300px] w-[400px]"
+              fileExtension="pdf"
+            />
+          </div>
+        </div>
         <Button
           onClick={sendResume}
           className="bg-zinc-700 transition-all duration-300 dark:text-zinc-200 dark:hover:bg-zinc-600/90 dark:hover:text-zinc-300"
         >
           Get The Report
         </Button>
-        <Collapsible className="mt-6 flex flex-col items-center justify-center">
+        {/* <Collapsible className="mt-6 flex flex-col items-center justify-center">
           <div className="md:text-md mb-4 flex items-center justify-center gap-2 text-sm font-semibold capitalize lg:text-lg">
             <h2>Upload Guidelines for Your Resume</h2>
             <CollapsibleTrigger
@@ -117,10 +138,9 @@ const Resume = () => {
               </ul>
             </div>
           </CollapsibleContent>
-        </Collapsible>
+        </Collapsible> */}
       </div>
     </div>
   );
 };
-
-export default Resume;
+export default Statistics;

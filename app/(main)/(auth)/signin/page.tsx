@@ -18,7 +18,7 @@ import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { EyeOff, Eye } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getSocialLoginUrl, parseJwt } from "@/lib/auth/auth-utils";
 import axios from "axios";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -80,9 +80,11 @@ const SignIn = () => {
     router.push(socialLoginUrl);
   };
 
-  if (isLoggedIn) {
-    router.push("/boards");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/boards");
+    }
+  }, [isLoggedIn, router]);
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center ">
       <div className="flex h-[650px] w-[300px] flex-col items-center justify-center rounded-lg border-[#181818] sm:w-[580px] sm:border-[0.5px] sm:bg-zinc-950 ">

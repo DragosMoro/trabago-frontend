@@ -5,6 +5,7 @@ import {
   Briefcase,
   FileLineChart,
   KanbanSquare,
+  Target,
 } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 
@@ -15,9 +16,9 @@ const routes = [
     href: "/boards",
   },
   {
-    icon: BarChartBig,
-    label: "Statistics",
-    href: "/statistics",
+    icon: Target,
+    label: "Targeted Resume",
+    href: "/targeted",
   },
   {
     icon: FileLineChart,

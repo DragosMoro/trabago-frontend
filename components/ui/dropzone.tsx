@@ -82,18 +82,15 @@ export function Dropzone({
       onClick={handleButtonClick}
     >
       <CardContent
-        className="flex flex-col items-center justify-center space-y-2 px-2 py-[60px]"
+        className="flex h-full flex-col items-center justify-center space-y-2 px-2"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
         <UploadCloud className="h-10 w-10 md:h-14 md:w-14 xl:h-20 xl:w-20" />
         <div className="flex items-center justify-center pt-5 capitalize">
           <div className="flex flex-col items-center justify-center gap-1">
-            <span className="md:text-md text-sm font-medium">
+            <span className="md:text-md text-center text-sm font-medium">
               Drag a File here or Click to upload your resume
-            </span>
-            <span className="text-xs md:text-sm">
-              (Only PDF resumes in English accepted, max file size: 2MB)
             </span>
           </div>
           <input

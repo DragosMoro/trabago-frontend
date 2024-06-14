@@ -29,12 +29,20 @@ interface AuthProviderProps {
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user") || "null");
     setUser(storedUser);
   }, []);
 
+  if (!isMounted) {
+    return null;
+  }
   const getUser = (): User | null => {
     return JSON.parse(localStorage.getItem("user") || "null");
   };
