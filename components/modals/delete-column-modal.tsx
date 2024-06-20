@@ -77,14 +77,14 @@ const DeleteColumnModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden bg-zinc-950 p-0 text-white">
+      <DialogContent className="overflow-hidden dark:bg-zinc-950 p-0 dark:text-white text-zinc-900">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
             Delete Column
           </DialogTitle>
-          <DialogDescription className="pt-4 text-center text-zinc-300">
+          <DialogDescription className="pt-4 text-center dark:text-zinc-300 text-zinc-600">
             Confirm deletion of column
-            <span className="font-semibold text-white">
+            <span className="font-semibold dark:text-white text-zinc-900">
               {" "}
               {column?.name}
             </span>{" "}
@@ -96,14 +96,14 @@ const DeleteColumnModal = () => {
             <Button
               disabled={isLoading}
               onClick={onClose}
-              className="bg-zinc-100 text-zinc-900 transition-all duration-300 ease-in hover:bg-zinc-200 dark:bg-zinc-900/40 dark:text-white dark:hover:bg-zinc-900"
+              className="bg-zinc-200 text-zinc-900 transition-all duration-300 ease-in hover:bg-zinc-300 dark:bg-zinc-900/40 dark:text-white dark:hover:bg-zinc-900"
             >
               Cancel
             </Button>
             <Button
               disabled={isLoading}
               onClick={onClickHandler}
-              className="bg-zinc-900/40 text-zinc-100 transition-all duration-300 ease-in hover:bg-zinc-900 dark:bg-zinc-200 dark:text-black dark:hover:bg-zinc-300"
+              className="text-white transition-all duration-300 ease-in bg-[#0b70a9] hover:bg-[#0b70a9]/80 "
             >
               Confirm
             </Button>

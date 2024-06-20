@@ -246,7 +246,7 @@ const ColumnContainer = () => {
           <ol
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="ml-10 mt-8 flex h-full gap-3 pt-[70px]"
+            className="ml-10 mt-8 flex h-full gap-3 pb-[20px] pt-[70px]"
           >
             {columnsWithCards.map((column, i) => (
               <ColumnItem key={column.id} index={i} data={column} />

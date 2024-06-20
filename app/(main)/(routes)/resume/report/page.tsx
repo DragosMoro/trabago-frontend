@@ -12,24 +12,15 @@ export default function Report() {
   };
   const redirectToBoard = () => {
     router.push("/boards");
-  }
+  };
   return (
-    <div
-      className="flex h-full w-full items-center justify-center overflow-auto"
-      style={{
-        background: `
-      linear-gradient(to right bottom,#09090b  40%, #055b8c 10%, transparent 50%),
-      linear-gradient(to left top, #09090b 40%, #033b5b 10%)
-  
-  `,
-      }}
-    >
-      <div className="flex h-[400px] w-[600px] flex-col items-center justify-between space-y-2 rounded-lg bg-zinc-900 px-10 py-[30px]">
+    <div className="bg-custom-gradient-light dark:bg-custom-gradient-dark flex h-full w-full items-center justify-center overflow-auto ">
+      <div className="flex h-[400px] w-[600px] flex-col items-center justify-between space-y-2 rounded-lg bg-zinc-100 px-10 py-[30px] dark:bg-zinc-900">
         <div className="">
-          <h1 className="mb-3 text-center text-3xl font-bold text-zinc-200">
+          <h1 className="mb-3 text-center text-3xl font-bold dark:text-zinc-200">
             Resume Report
           </h1>
-          <p className="text-center text-sm font-light text-zinc-400">
+          <p className="text-center text-sm dark:text-zinc-400">
             Here&apos;s your resume report, showing the top three fields and
             their percentages, indicating how well your resume matches job
             requirements.
@@ -49,10 +40,16 @@ export default function Report() {
             })}
         </ul>
         <div className="flex items-center gap-[100px]">
-          <Button onClick={redirectToBoard} className="bg-zinc-800 transition-all duration-300 dark:text-zinc-200 dark:hover:bg-zinc-600/90 dark:hover:text-zinc-300 w-[180px]">
+          <Button
+            onClick={redirectToBoard}
+            className="w-[180px] bg-zinc-200 text-zinc-900 transition-all duration-300 ease-in hover:bg-zinc-300 dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700"
+          >
             Go Back To Board
           </Button>
-          <Button onClick={redirectToTryAgain} className="bg-zinc-800 transition-all duration-300 dark:text-zinc-200 dark:hover:bg-zinc-600/90 dark:hover:text-zinc-300 w-[180px]">
+          <Button
+            onClick={redirectToTryAgain}
+            className="w-[180px] bg-[#0b70a9] text-white transition-all duration-300 ease-in dark:hover:bg-[#0b70a9]/80 hover:bg-[#0b70a9]/90"
+          >
             Try Again
           </Button>
         </div>

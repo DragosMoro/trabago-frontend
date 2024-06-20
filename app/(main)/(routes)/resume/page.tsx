@@ -60,28 +60,19 @@ const Resume = () => {
   };
 
   return (
-    <div
-      className="flex h-full w-full items-center justify-center overflow-auto"
-      style={{
-        background: `
-        linear-gradient(to right bottom,#09090b  40%, #055b8c 10%, transparent 50%),
-        linear-gradient(to left top, #09090b 40%, #033b5b 10%)
-    
-    `,
-      }}
-    >
-      <div className="flex flex-col items-center justify-center gap-10 rounded-lg bg-zinc-900 px-6 py-6 dark:text-zinc-200">
+    <div className="bg-custom-gradient-light dark:bg-custom-gradient-dark flex h-full w-full items-center justify-center overflow-auto">
+      <div className="flex flex-col items-center justify-center gap-10 rounded-lg bg-zinc-100 px-6 py-6 shadow-md dark:bg-zinc-900 dark:text-zinc-200">
         <h1 className="text-md font-semibold capitalize md:text-xl lg:text-2xl xl:text-3xl">
           Upload your resume
         </h1>
         <Dropzone
           onChange={handleFileChange}
-          className="w-[250px] md:w-[440px] lg:w-[700px] h-[200px] md:h-[140px] lg:h-[180px]"
+          className="h-[200px] w-[250px] md:h-[140px] md:w-[440px] lg:h-[180px] lg:w-[700px]"
           fileExtension="pdf"
         />
         <Button
           onClick={sendResume}
-          className="bg-zinc-700 transition-all duration-300 dark:text-zinc-200 dark:hover:bg-zinc-600/90 dark:hover:text-zinc-300"
+          className="bg-[#0b70a9] text-white transition-all duration-300 ease-out hover:bg-[#0b70a9]/80 hover:ease-in "
         >
           Get The Report
         </Button>
@@ -100,7 +91,7 @@ const Resume = () => {
             </CollapsibleTrigger>
           </div>
           <CollapsibleContent>
-            <div className="flex w-[250px] flex-col items-center justify-center rounded-lg bg-zinc-800 py-4 pl-10 pr-4 text-sm md:w-[440px] lg:w-[700px]">
+            <div className="flex w-[250px] flex-col items-center justify-center rounded-lg bg-zinc-200 py-4 pl-10 pr-4 text-sm dark:bg-zinc-800 md:w-[440px] lg:w-[700px] ">
               <ul className=" list-disc space-y-3">
                 <li>Upload your resume in PDF format.</li>
                 <li>Ensure your resume is no larger than 2MB.</li>

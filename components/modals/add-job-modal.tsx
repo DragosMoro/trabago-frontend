@@ -203,9 +203,9 @@ const AddJobModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className=" min-h-[700px] overflow-hidden text-zinc-300 dark:bg-zinc-950 md:max-w-5xl">
+      <DialogContent className=" min-h-[700px] overflow-hidden dark:bg-zinc-950 dark:text-zinc-300 md:max-w-5xl">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-bold text-zinc-200">
+          <DialogTitle className="text-center text-2xl font-bold dark:text-zinc-200">
             Add A New Job {columnFormat ? "in " + columnFormat.name : ""}
           </DialogTitle>
         </DialogHeader>
@@ -352,7 +352,7 @@ const AddJobModal = () => {
                         defaultValue={field.value}
                       >
                         <FormControl className="w-[230px]">
-                          <SelectTrigger className="capitalize">
+                          <SelectTrigger className="capitalize focus:ring-0 focus:ring-offset-0">
                             <SelectValue placeholder="Select A Column" />
                           </SelectTrigger>
                         </FormControl>
@@ -424,7 +424,7 @@ const AddJobModal = () => {
                         defaultValue={field.value}
                       >
                         <FormControl className="w-[230px]">
-                          <SelectTrigger className="capitalize">
+                          <SelectTrigger className="capitalize focus:ring-0 focus:ring-offset-0">
                             <SelectValue placeholder="Select a job type" />
                           </SelectTrigger>
                         </FormControl>
@@ -463,7 +463,7 @@ const AddJobModal = () => {
                         defaultValue={field.value}
                       >
                         <FormControl className="w-[230px]">
-                          <SelectTrigger className="capitalize">
+                          <SelectTrigger className="capitalize focus:ring-0 focus:ring-offset-0">
                             <SelectValue placeholder="Select a work mode" />
                           </SelectTrigger>
                         </FormControl>
@@ -498,7 +498,7 @@ const AddJobModal = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="w-[230px]"
+                          className="w-[230px] focus:ring-0 focus:ring-offset-0"
                           placeholder="Enter The Salary"
                           {...field}
                         />
@@ -536,9 +536,7 @@ const AddJobModal = () => {
             <DialogFooter className="pt-[28px]">
               <Button
                 disabled={isLoading}
-                className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-zinc-950 text-zinc-100 
-              transition ease-out hover:bg-zinc-900 hover:ease-in
-                "
+                className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-[#0b70a9] text-white transition ease-out hover:bg-[#0b70a9]/80 hover:ease-in"
               >
                 Add Job
               </Button>

@@ -26,13 +26,19 @@ const SidebarUser = () => {
           <UserCircle2 className="h-6 w-6 " />
           <span>
             {/* {console.log(user.data)} */}
-            {user?.data.name.length>1 ? (user?.data.name.length > 20
-              ? user?.data.name.split(" ")[0]
-              : user?.data.name) : "User Information"}
+            {user?.data.name.length > 1
+              ? user?.data.name.length > 20
+                ? user?.data.name.split(" ")[0]
+                : user?.data.name
+              : "User Information"}
           </span>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="px-0 pb-3 pt-3 max-w-[240px]" side="top" align="start">
+      <PopoverContent
+        className="max-w-[240px] px-0 pb-3 pt-3"
+        side="top"
+        align="start"
+      >
         <div className="pb-4 text-center text-sm font-medium text-neutral-400">
           User Actions
         </div>

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  BarChartBig,
-  Briefcase,
-  FileLineChart,
-  KanbanSquare,
-  Target,
-} from "lucide-react";
+import { FileLineChart, KanbanSquare, Target } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 
 const routes = [
@@ -24,11 +18,6 @@ const routes = [
     icon: FileLineChart,
     label: "Resume Analysis",
     href: "/resume",
-  },
-  {
-    icon: Briefcase,
-    label: "Job Searching",
-    href: "/jobs",
   },
 ];
 

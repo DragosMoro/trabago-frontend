@@ -76,7 +76,7 @@ export function Dropzone({
 
   return (
     <Card
-      className={`border-2 border-dashed bg-zinc-800 transition-all duration-300 hover:cursor-pointer hover:border-muted-foreground/50 dark:text-zinc-400 dark:hover:text-zinc-200 ${className}`}
+      className={`border-2 border-dashed dark:bg-zinc-800 bg-zinc-200 transition-all duration-300 hover:cursor-pointer hover:border-muted-foreground/50 dark:text-zinc-400 dark:hover:text-zinc-200 text-zinc-600 hover:text-zinc-800 ${className}`}
       {...props}
       role="button"
       onClick={handleButtonClick}

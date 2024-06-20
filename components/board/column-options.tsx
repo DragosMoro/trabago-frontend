@@ -15,7 +15,7 @@ const ColumnOptions = ({ data }: ColumnOptionsProps) => {
   const closeRef = useRef<ElementRef<"button">>(null);
   const { onOpen } = useCardModal();
   const { name, id } = data;
-  const columnForAdd= { id, name};
+  const columnForAdd = { id, name };
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -23,8 +23,12 @@ const ColumnOptions = ({ data }: ColumnOptionsProps) => {
           <MoreVertical className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="px-0 pb-3 pt-3 max-w-[240px]" side="bottom" align="start">
-        <div className="pb-4 text-center text-sm font-medium text-neutral-400">
+      <PopoverContent
+        className="max-w-[240px] px-0 pb-3 pt-3"
+        side="bottom"
+        align="start"
+      >
+        <div className="pb-4 text-center text-sm font-medium text-neutral-800 dark:text-neutral-400">
           Column Actions
         </div>
         <PopoverClose ref={closeRef} asChild>

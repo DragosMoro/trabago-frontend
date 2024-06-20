@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -25,8 +25,14 @@ const LoadingPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center bg-black text-white">
-      <Image src="logo.svg" width={160} height={160} alt="logo" className="animate-pulse" />
+    <div className="flex h-screen flex-col items-center justify-center bg-white text-center text-black dark:bg-black dark:text-white">
+      <Image
+        src="logo.svg"
+        width={160}
+        height={160}
+        alt="logo"
+        className="animate-pulse"
+      />
       <h1 className="mt-5 text-xl">{message}</h1>
     </div>
   );

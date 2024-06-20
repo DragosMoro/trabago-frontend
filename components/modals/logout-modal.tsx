@@ -32,12 +32,12 @@ const LogoutModal = () => {
   };
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden bg-zinc-950 p-0 text-white">
+      <DialogContent className="overflow-hidden p-0 dark:bg-zinc-950 dark:text-white">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
             Logout
           </DialogTitle>
-          <DialogDescription className="pt-4 text-center text-zinc-300">
+          <DialogDescription className="pt-4 text-center text-zinc-800 dark:text-zinc-300">
             Are you sure you want to logout?
           </DialogDescription>
         </DialogHeader>
@@ -45,13 +45,13 @@ const LogoutModal = () => {
           <div className="flex w-full items-center justify-center gap-4">
             <Button
               onClick={onClose}
-              className="bg-zinc-100 text-zinc-900 transition-all duration-300 ease-in hover:bg-zinc-200 dark:bg-zinc-900/40 dark:text-white dark:hover:bg-zinc-900"
+              className="bg-zinc-200 text-zinc-900 transition-all duration-300 ease-in hover:bg-zinc-300 dark:bg-zinc-900/40 dark:text-white dark:hover:bg-zinc-900"
             >
               Cancel
             </Button>
             <Button
               onClick={onLogout}
-              className="bg-zinc-900/40 text-zinc-100 transition-all duration-300 ease-in hover:bg-zinc-900 dark:bg-zinc-200 dark:text-black dark:hover:bg-zinc-300"
+              className="bg-[#0b70a9] text-white transition-all duration-300 ease-in hover:bg-[#0b70a9]/80"
             >
               Confirm
             </Button>

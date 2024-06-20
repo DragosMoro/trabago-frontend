@@ -2,11 +2,11 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -16,6 +16,16 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        "custom-gradient-dark": `
+          linear-gradient(to right bottom, #09090b 40%, #055b8c 10%, transparent 50%),
+          linear-gradient(to left top, #09090b 40%, #033b5b 10%)
+        `,
+        "custom-gradient-light": `
+          linear-gradient(to right bottom, #ffffff 40%, #055b8c 10%, transparent 50%),
+          linear-gradient(to left top, #ffffff 40%, #033b5b 10%)
+        `,
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -73,4 +83,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

@@ -27,7 +27,7 @@ const Statistics = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("job_description", jobDescription);
-  
+
     try {
       const response = await axios.post(
         `http://localhost:5000/analyze`,
@@ -50,7 +50,7 @@ const Statistics = () => {
       toast.info("Job description must be at least 50 characters long.");
       return;
     }
-  
+
     if (uploadedFile) {
       router.push("/loading");
       const response = await uploadFile(uploadedFile, jobDescription);
@@ -65,17 +65,8 @@ const Statistics = () => {
   };
 
   return (
-    <div
-      className="flex h-full w-full items-center justify-center overflow-auto"
-      style={{
-        background: `
-        linear-gradient(to right bottom,#09090b  40%, #055b8c 10%, transparent 50%),
-        linear-gradient(to left top, #09090b 40%, #033b5b 10%)
-    
-    `,
-      }}
-    >
-      <div className="flex flex-col items-center justify-center gap-10 rounded-lg bg-zinc-900 px-6 py-6 dark:text-zinc-200">
+    <div className="bg-custom-gradient-light dark:bg-custom-gradient-dark flex h-full w-full items-center justify-center overflow-auto">
+      <div className="flex flex-col items-center justify-center gap-10 rounded-lg bg-zinc-100 px-6 py-6 shadow-md dark:bg-zinc-900 dark:text-zinc-200">
         <h1 className="pb-4 text-3xl font-semibold">Targeted Job Resume</h1>
         <div className="flex gap-10">
           <div className="flex flex-col gap-3">
@@ -84,7 +75,7 @@ const Statistics = () => {
             </span>
             <Textarea
               placeholder="Please ensure your input contains more than 50 characters."
-              className="h-[300px] w-[400px] resize-none bg-zinc-800"
+              className="h-[300px] w-[400px] resize-none bg-zinc-200 dark:bg-zinc-800 "
               onChange={handleTextChange}
             />
           </div>
@@ -102,7 +93,7 @@ const Statistics = () => {
         </div>
         <Button
           onClick={sendResume}
-          className="bg-zinc-700 transition-all duration-300 dark:text-zinc-200 dark:hover:bg-zinc-600/90 dark:hover:text-zinc-300"
+          className="bg-[#0b70a9] text-white transition-all duration-300 ease-out hover:bg-[#0b70a9]/80 hover:ease-in"
         >
           Get The Report
         </Button>

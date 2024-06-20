@@ -25,7 +25,7 @@ const CardItem = ({ data, index, color }: CardItemProps) => {
             backgroundColor: color,
           }}
         >
-          <div className="ml-[3px] flex h-full w-full flex-col gap-3 rounded-md bg-zinc-900 px-4 py-3">
+          <div className="ml-[3px] flex h-full w-full flex-col gap-3 rounded-md border bg-zinc-100 px-4 py-3 dark:bg-zinc-900">
             <div className=" flex items-center gap-3">
               {data.imageUrl === "" ? (
                 <Image
@@ -46,18 +46,18 @@ const CardItem = ({ data, index, color }: CardItemProps) => {
                 />
               )}
 
-              <span className="text-xl font-medium text-zinc-200">
+              <span className="text-xl font-medium text-zinc-900 dark:text-zinc-200">
                 {data.company}
               </span>
             </div>
-            <span className="text-sm font-medium text-zinc-300">
+            <span className="text-sm font-medium text-zinc-800 dark:text-zinc-300">
               {data.position}
             </span>
             <div className="flex justify-between">
-              <span className="text-xs font-light text-zinc-300">
+              <span className="text-xs font-normal text-zinc-800 dark:text-zinc-300">
                 {data.location}
               </span>
-              <span className="text-xs font-light text-zinc-300">
+              <span className="text-xs font-normal text-zinc-900 dark:text-zinc-300">
                 {data.date}
               </span>
             </div>

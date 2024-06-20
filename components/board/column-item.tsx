@@ -17,7 +17,6 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
   const { id, name } = data;
   const columnFormatForJobAdd: ColumnFormatForJobAdd = { id, name };
   return (
-  
     <Draggable draggableId={data.id} index={index}>
       {(provided, snapshot) => (
         <li
@@ -27,7 +26,7 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
           style={getStyle(provided.draggableProps.style, snapshot)}
         >
           <div
-            className=" flex w-full flex-col items-center justify-center rounded-md border border-neutral-900 bg-zinc-950 pb-4 shadow-md "
+            className=" flex w-full flex-col items-center justify-center rounded-md border border-neutral-200 bg-white pb-4 shadow-md dark:border-neutral-900 dark:bg-zinc-950 "
             {...provided.dragHandleProps}
           >
             <ColumnHeader data={data} />
@@ -37,32 +36,32 @@ const ColumnItem = ({ data, index }: ColumnItemProps) => {
                 data.cards.length > 0 && "mb-4",
               )}
             >
-              <CardAdd columnFormat={columnFormatForJobAdd}/>
+              <CardAdd columnFormat={columnFormatForJobAdd} />
             </div>
             <Droppable droppableId={data.id} type="card">
               {(provided, snapshot) => (
                 <ScrollArea className="px-2">
-                <ol
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="mx-1 flex flex-col gap-y-2 px-1 py-0.5 2xl:max-h-[596px] max-h-[510px]" 
-                >
-                  {data.cards.map((elem, i) => (
-                    <CardItem
-                      index={i}
-                      key={elem.id}
-                      data={elem}
-                      color={data.color}
-                    />
-                  ))}
-                  <div
-                    style={{
-                      display: snapshot.isDraggingOver ? "block" : "none",
-                    }}
+                  <ol
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="mx-1 flex max-h-[510px] flex-col gap-y-2 px-1 py-0.5 2xl:max-h-[596px]"
                   >
-                    {provided.placeholder}
-                  </div>
-                </ol>
+                    {data.cards.map((elem, i) => (
+                      <CardItem
+                        index={i}
+                        key={elem.id}
+                        data={elem}
+                        color={data.color}
+                      />
+                    ))}
+                    <div
+                      style={{
+                        display: snapshot.isDraggingOver ? "block" : "none",
+                      }}
+                    >
+                      {provided.placeholder}
+                    </div>
+                  </ol>
                 </ScrollArea>
               )}
             </Droppable>

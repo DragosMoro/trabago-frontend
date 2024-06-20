@@ -138,9 +138,9 @@ const EditColumnModal = () => {
   };
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className=" min-h-[400px] overflow-hidden text-zinc-300 dark:bg-zinc-950 md:max-w-md">
+      <DialogContent className=" min-h-[400px] overflow-hidden dark:text-zinc-300 text-zinc-700 dark:bg-zinc-950 md:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-bold text-zinc-200">
+          <DialogTitle className="text-center text-2xl font-bold dark:text-zinc-200 text-zinc-800">
             Edit Column {column?.name}
           </DialogTitle>
         </DialogHeader>
@@ -225,8 +225,7 @@ const EditColumnModal = () => {
             <DialogFooter className="pt-[35px]">
               <Button
                 disabled={isLoading}
-                className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-zinc-950 text-zinc-100 
-              transition ease-out hover:bg-zinc-900 hover:ease-in
+                className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-[#0b70a9] text-white transition ease-out hover:bg-[#0b70a9]/80 hover:ease-in
                 "
               >
                 Add Column

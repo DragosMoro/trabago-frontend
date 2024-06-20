@@ -3,11 +3,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Toaster } from "sonner";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import QueryProvider from "@/components/providers/query-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
-
+import { Toaster } from "@/components/ui/sonner";
 const font = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,18 +29,8 @@ export default function RootLayout({
             storageKey="trabago-theme"
           >
             <QueryProvider>
-              <Toaster
-                toastOptions={{
-                  style: {
-                    background: "#09090b",
-                    color: "#fff",
-                    border: "1px solid #333333",
-                  },
-                  className: "class",
-                }}
-              />
+              <Toaster />
               <ModalProvider />
-
               {children}
             </QueryProvider>
           </ThemeProvider>
