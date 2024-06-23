@@ -14,7 +14,7 @@ const CourseCard: React.FC<Course> = ({
       rel="noopener noreferrer"
       className="transform cursor-pointer transition-all duration-200 ease-in-out hover:scale-105 hover:opacity-90 hover:shadow-lg"
     >
-      <div className="flex h-full w-full flex-col items-center justify-between rounded-md border bg-zinc-900 p-1 text-center">
+      <div className="flex h-full w-full flex-col items-center justify-between rounded-md border dark:bg-zinc-900 bg-zinc-200 p-1 text-center">
         <Image
           loader={() => imageUrl}
           src={imageUrl}

@@ -64,6 +64,7 @@ const ColumnContainer = () => {
 
   const fetchColumns = async (query = ""): Promise<Column[]> => {
     if (user) {
+      console.log("AUTH:::", bearerAuth(user));
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAllByUser/${user.data.id}`,
         {

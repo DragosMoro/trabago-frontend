@@ -25,15 +25,7 @@ export default function TargetedReport() {
   const udemyCourses = params["udemy_courses"] || [];
 
   return (
-    <div
-      className="flex h-full w-full items-center justify-center overflow-auto"
-      style={{
-        background: `
-             linear-gradient(to right bottom, #09090b 40%, #055b8c 10%, transparent 50%),
-             linear-gradient(to left top, #09090b 40%, #033b5b 10%)
-           `,
-      }}
-    >
+    <div className="flex h-full w-full items-center justify-center overflow-auto bg-custom-gradient-light dark:bg-custom-gradient-dark">
       <BentoGrid
         missingHardSkills={missingHardSkills}
         missingSoftSkills={missingSoftSkills}

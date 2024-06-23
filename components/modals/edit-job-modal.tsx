@@ -1,9 +1,9 @@
 "use client";
 import { useCardModal } from "@/hooks/use-modal-store";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Dialog } from "@radix-ui/react-dialog";
@@ -73,12 +73,13 @@ const formSchema = z.object({
     required_error: "A date is required.",
   }),
   salary: z.string(),
-  jobUrl: z.string(),
+  jobUrl: z.string().optional(),
   jobType: z.string().optional(),
   workMode: z.string().optional(),
 });
 
-const AddJobModal = () => {
+const EditJobModal = () => {
+  const [selectedColumn, setSelectedColumn] = useState<Column | null>(null);
   const router = useRouter();
   const Auth = useAuth();
   const user = Auth?.getUser();
@@ -88,33 +89,49 @@ const AddJobModal = () => {
     }
   }, [user]);
   const { isOpen, onClose, type, data } = useCardModal();
-  const isModalOpen = isOpen && type === "addJob";
-  const { columnFormat } = data;
+  const isModalOpen = isOpen && type === "editJob";
+  const { card } = data;
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      company: "",
-      position: "",
-      location: "",
-      description: "",
-      column: columnFormat ? columnFormat.name : "",
-      date: new Date(),
-      salary: "",
-      jobUrl: "",
-      jobType: "",
-      workMode: "",
+      company: card?.company,
+      position: card?.position,
+      location: card?.location,
+      description: card?.description,
+      column: card?.jobColumn.id,
+      date: card?.date ? parse(card.date, "dd MMM yyyy", new Date()) : null,
+      salary: card?.salary,
+      jobUrl: card?.jobUrl,
+      jobType: card?.jobType,
+      workMode: card?.workMode,
     },
   });
 
-  const queryClient = useQueryClient();
+  const modalOpenRef = useRef(false);
 
   useEffect(() => {
-    if (columnFormat) {
-      form.setValue("column", columnFormat.name);
-    } else if (form.getValues("column") === "") {
-      form.setValue("column", "");
+    console.log(card);
+    if (isModalOpen && !modalOpenRef.current && card) {
+      form.setValue("company", card?.company);
+      form.setValue("position", card?.position);
+      form.setValue("location", card?.location);
+      form.setValue("description", card?.description);
+      form.setValue("column", card?.jobColumn.id);
+      form.setValue(
+        "date",
+        card?.date ? parse(card.date, "dd MMM yyyy", new Date()) : null,
+      );
+      form.setValue("salary", card?.salary);
+      form.setValue("jobUrl", card?.jobUrl);
+      form.setValue("jobType", card?.jobType);
+      form.setValue("workMode", card?.workMode);
+      modalOpenRef.current = true;
+    } else if (!isModalOpen) {
+      modalOpenRef.current = false;
     }
-  }, [columnFormat, form]);
+  }, [card, form, isModalOpen]);
+
+  const queryClient = useQueryClient();
 
   const fetchColumns = async (query = ""): Promise<Column[]> => {
     if (user) {
@@ -147,21 +164,75 @@ const AddJobModal = () => {
         ? format(values.date, "dd MMM yyyy")
         : null;
       console.log(JSON.stringify({ ...values, date: formattedDate }));
-      if (user) {
-        await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/jobs`,
-          {
-            ...values,
-            date: formattedDate,
-          },
-          {
-            headers: { Authorization: bearerAuth(user) },
-          },
-        );
+      const {
+        company,
+        position,
+        location,
+        description,
+        salary,
+        jobUrl,
+        jobType,
+        workMode,
+      } = values;
+      if (card) {
+        const { id, createdAt, updatedAt, order, jobColumn, imageUrl } = card;
+        const updatedCard = {
+          id,
+          company,
+          position,
+          location,
+          date: formattedDate,
+          createdAt,
+          updatedAt,
+          order,
+          description,
+          imageUrl,
+          salary,
+          jobType,
+          jobUrl: jobUrl,
+          workMode,
+          jobColumn: selectedColumn != null ? selectedColumn : jobColumn,
+        };
+        if (user) {
+          await axios.put(
+            `${process.env.NEXT_PUBLIC_API_URL}/jobs`,
+            updatedCard,
+            {
+              headers: { Authorization: bearerAuth(user) },
+            },
+          );
+        }
       }
       form.reset();
       onClose();
-      toast.success("The job has been added successfully.");
+      toast.success("The job has been updated successfully.");
+    } catch (error: any) {
+      console.log(error);
+      if (error.response) {
+        toast.error(`Error: ${error.response.data}. Please try again.`);
+      } else if (error.request) {
+        toast.error(
+          "No response from server. Please check your connection and try again.",
+        );
+      } else {
+        toast.error(`Error: ${error.message}. Please try again.`);
+      }
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      if (card) {
+        const { id } = card;
+        if (user) {
+          await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/jobs/${id}`, {
+            headers: { Authorization: bearerAuth(user) },
+          });
+        }
+      }
+      form.reset();
+      onClose();
+      toast.success("The job has been deleted successfully.");
     } catch (error: any) {
       console.log(error);
       if (error.response) {
@@ -206,7 +277,7 @@ const AddJobModal = () => {
       <DialogContent className=" min-h-[700px] overflow-hidden dark:bg-zinc-950 dark:text-zinc-300 md:max-w-5xl">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold dark:text-zinc-200">
-            Add A New Job {columnFormat ? "in " + columnFormat.name : ""}
+            Edit the Job Details
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -320,7 +391,7 @@ const AddJobModal = () => {
                           <Calendar
                             className="max-h-[230px] max-w-[400px] overflow-hidden"
                             mode="single"
-                            selected={field.value}
+                            selected={field.value || undefined}
                             onSelect={field.onChange}
                             disabled={(date) =>
                               date > new Date() || date < new Date("1900-01-01")
@@ -346,10 +417,17 @@ const AddJobModal = () => {
                       </FormLabel>
                       <Select
                         disabled={isLoading}
-                        onValueChange={(value) =>
-                          field.onChange({ target: { value } })
-                        }
                         defaultValue={field.value}
+                        onValueChange={(value) => {
+                          field.onChange(value);
+                          const selectedColumn = columns?.find(
+                            (column) => column.id === value,
+                          );
+                          if (selectedColumn) {
+                            console.log(selectedColumn);
+                            setSelectedColumn(selectedColumn);
+                          }
+                        }}
                       >
                         <FormControl className="w-[230px]">
                           <SelectTrigger className="capitalize focus:ring-0 focus:ring-offset-0">
@@ -361,7 +439,7 @@ const AddJobModal = () => {
                             columns.map((columnFormat) => (
                               <SelectItem
                                 key={columnFormat.id}
-                                value={columnFormat.name}
+                                value={columnFormat.id}
                                 className="capitalize"
                               >
                                 {columnFormat.name.toLowerCase()}
@@ -369,12 +447,12 @@ const AddJobModal = () => {
                             ))}
                         </SelectContent>
                       </Select>
-
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                {/* this is the jobUrl field */}
+
+                {/* this is the URL field */}
                 <FormField
                   control={form.control}
                   name="jobUrl"
@@ -420,7 +498,7 @@ const AddJobModal = () => {
                       </FormLabel>
                       <Select
                         disabled={isLoading}
-                        onValueChange={(value) => field.onChange(value || "")}
+                        onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl className="w-[230px]">
@@ -459,7 +537,7 @@ const AddJobModal = () => {
                       </FormLabel>
                       <Select
                         disabled={isLoading}
-                        onValueChange={(value) => field.onChange(value || "")}
+                        onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl className="w-[230px]">
@@ -538,7 +616,7 @@ const AddJobModal = () => {
                 disabled={isLoading}
                 className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-[#0b70a9] text-white transition ease-out hover:bg-[#0b70a9]/80 hover:ease-in"
               >
-                Add Job
+                Save Job
               </Button>
             </DialogFooter>
           </form>
@@ -548,4 +626,4 @@ const AddJobModal = () => {
   );
 };
 
-export default AddJobModal;
+export default EditJobModal;

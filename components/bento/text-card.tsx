@@ -7,15 +7,17 @@ interface TextCardProps {
 
 const TextCard: React.FC<TextCardProps> = ({ items, heading }) => {
   return (
-    <ScrollArea className="col-span-2 rounded-md border bg-[#1a1a1a] p-4 text-center text-white ">
-        <h2 className="mb-4 text-2xl font-bold">{heading}</h2>
-        <ul className="space-y-2">
-          {items.map((item, index) => (
-            <li key={index} className="text-lg">
-              {item}
-            </li>
-          ))}
-        </ul>
+    <ScrollArea className="col-span-2 rounded-md border bg-zinc-200 p-4 text-center dark:bg-zinc-900 dark:text-white">
+      <h2 className="sticky top-0 mb-4 bg-zinc-200 text-2xl font-bold dark:bg-zinc-900">
+        {heading}
+      </h2>
+      <ul className="space-y-2">
+        {items.map((item, index) => (
+          <li key={index} className="text-lg">
+            {item}
+          </li>
+        ))}
+      </ul>
     </ScrollArea>
   );
 };

@@ -86,17 +86,17 @@ const SignIn = () => {
     }
   }, [isLoggedIn, router]);
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center ">
-      <div className="flex h-[650px] w-[300px] flex-col items-center justify-center rounded-lg border-[#181818] sm:w-[580px] sm:border-[0.5px] sm:bg-zinc-950 ">
-        <h1 className="mb-[30px] text-2xl font-semibold text-white sm:mb-[50px] sm:text-3xl">
+    <div className="bg-gradient-light dark:bg-gradient-dark flex h-screen w-full flex-col items-center justify-center">
+      <div className="sha flex h-[650px] w-[300px] flex-col items-center justify-center rounded-lg dark:border-[#181818] sm:w-[580px] sm:border-[0.5px] sm:bg-zinc-100 dark:sm:bg-zinc-950 ">
+        <h1 className="mb-[30px] text-2xl font-semibold dark:text-white sm:mb-[50px] sm:text-3xl">
           Sign In
         </h1>
         <div className="flex flex-col gap-6">
           <Button
-            className="flex w-[300px] items-center justify-center gap-2 bg-zinc-900/50 text-zinc-300 transition-all duration-300 hover:bg-zinc-900/80"
+            className="flex w-[300px] items-center justify-center gap-2 transition-all duration-300 hover:bg-zinc-900/80 dark:bg-zinc-900/50 dark:text-zinc-300"
             onClick={handleLoginWithGoogle}
           >
-            <FaGoogle className="h-4 w-4 text-zinc-300" />
+            <FaGoogle className="h-4 w-4 dark:text-zinc-300" />
             Continue with Google
           </Button>
         </div>
@@ -117,8 +117,8 @@ const SignIn = () => {
               render={({ field, fieldState: { error } }) => (
                 <FormItem>
                   <FormLabel
-                    className={`text-xs text-zinc-400 sm:text-sm ${
-                      error ? "text-white" : ""
+                    className={`text-xs dark:text-zinc-400 sm:text-sm ${
+                      error ? "dark:text-white" : ""
                     }`}
                   >
                     Email
@@ -126,12 +126,12 @@ const SignIn = () => {
                   <FormControl>
                     <Input
                       disabled={isFormLoading}
-                      className="w-[300px] text-zinc-400"
+                      className="w-[300px] dark:text-zinc-400"
                       placeholder="Enter your email"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs text-white" />
+                  <FormMessage className="text-xs dark:text-white" />
                 </FormItem>
               )}
             />
@@ -141,8 +141,8 @@ const SignIn = () => {
               render={({ field, fieldState: { error } }) => (
                 <FormItem>
                   <FormLabel
-                    className={`text-xs text-zinc-400 sm:text-sm ${
-                      error ? "text-white" : ""
+                    className={`text-xs dark:text-zinc-400 sm:text-sm ${
+                      error ? "dark:text-white" : ""
                     }`}
                   >
                     Password
@@ -152,7 +152,7 @@ const SignIn = () => {
                       <Input
                         type={showPassword ? "text" : "password"}
                         disabled={isFormLoading}
-                        className="w-[300px] pr-10 text-zinc-400"
+                        className="w-[300px] pr-10 dark:text-zinc-400"
                         placeholder="Enter your password"
                         {...field}
                       />
@@ -169,19 +169,19 @@ const SignIn = () => {
                       )}
                     </div>
                   </FormControl>
-                  <FormMessage className="text-xs text-white" />
+                  <FormMessage className="text-xs dark:text-white" />
                 </FormItem>
               )}
             />
 
-            <Button className="mb-[10px] mt-[25px] w-[300px] gap-2 bg-zinc-900/50 text-zinc-300 transition-all duration-300 hover:bg-zinc-900/80">
+            <Button className="mb-[10px] mt-[25px] w-[300px] gap-2 transition-all duration-300 dark:bg-zinc-900/50 dark:text-zinc-300 dark:hover:bg-zinc-900/80">
               Continue
             </Button>
-            <p className="sm:text-md mt-4 text-sm text-zinc-400">
+            <p className="sm:text-md mt-4 text-sm dark:text-zinc-400">
               Don&apos;t have an account yet?{" "}
               <span
                 role="button"
-                className="ml-1 text-zinc-200 transition-all duration-500 hover:text-zinc-300/80 "
+                className="ml-1 font-semibold text-zinc-500 transition-all duration-500 hover:text-black dark:text-zinc-200 dark:hover:text-zinc-300/80"
                 onClick={registerRedirect}
               >
                 Sign Up.

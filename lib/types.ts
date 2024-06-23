@@ -17,7 +17,7 @@ export type Card = {
   position: string;
   location: string;
   date: string;
-  url: string;
+  jobUrl: string;
   salary: string;
   jobType: JobType;
   workMode: WorkMode;

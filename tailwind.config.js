@@ -25,6 +25,10 @@ module.exports = {
           linear-gradient(to right bottom, #ffffff 40%, #055b8c 10%, transparent 50%),
           linear-gradient(to left top, #ffffff 40%, #033b5b 10%)
         `,
+        "gradient-light":
+          "radial-gradient(circle, rgba(11,112,169,1) 5%, rgba(255,255,255,1) 100%)",
+        "gradient-dark":
+          "radial-gradient(circle, rgba(4,42,64,1) 1%, rgba(0,0,0,1) 100%)",
       },
       colors: {
         border: "hsl(var(--border))",

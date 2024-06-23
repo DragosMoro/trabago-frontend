@@ -27,7 +27,6 @@ import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import ColorPicker from "../color-picker";
 import { KanbanSquare, Palette } from "lucide-react";
-import { Column } from "@/lib/types";
 import { toast } from "sonner";
 
 import { useAuth } from "../providers/auth-provider";
@@ -228,7 +227,7 @@ const EditColumnModal = () => {
                 className="duration-350 ml-auto mr-auto h-[50px] w-[150px] border bg-[#0b70a9] text-white transition ease-out hover:bg-[#0b70a9]/80 hover:ease-in
                 "
               >
-                Add Column
+                Edit Column
               </Button>
             </DialogFooter>
           </form>
