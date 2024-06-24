@@ -30,7 +30,7 @@ const Statistics = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/analyze`,
+        `${process.env.NEXT_PUBLIC_FLASK_URL}/analyze`,
         formData,
         {
           headers: {

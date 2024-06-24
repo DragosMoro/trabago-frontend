@@ -1,5 +1,5 @@
 import MobileSidebar from "@/components/sidebar-menu/mobile-sidebar";
-import Sidebar from "@/components/sidebar-menu/sidebar";
+import Sidebar from "@/components/sidebar-menu/sidebar-component";
 import React from "react";
 
 const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
