@@ -30,7 +30,7 @@ const Resume = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/resume/upload`,
+        `${process.env.NEXT_PUBLIC_FLASK_URL}/classify`,
         formData,
         {
           headers: {
@@ -60,7 +60,7 @@ const Resume = () => {
   };
 
   return (
-    <div className="bg-custom-gradient-light dark:bg-custom-gradient-dark flex h-full w-full items-center justify-center overflow-auto">
+    <div className="flex h-full w-full items-center justify-center overflow-auto bg-custom-gradient-light dark:bg-custom-gradient-dark">
       <div className="flex flex-col items-center justify-center gap-10 rounded-lg bg-zinc-100 px-6 py-6 shadow-md dark:bg-zinc-900 dark:text-zinc-200">
         <h1 className="text-md font-semibold capitalize md:text-xl lg:text-2xl xl:text-3xl">
           Upload your resume
