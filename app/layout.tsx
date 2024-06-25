@@ -25,6 +25,7 @@ export default function RootLayout({
         <AuthProvider>
           <ThemeProvider
             attribute="class"
+            defaultTheme="dark"
             enableSystem={false}
             storageKey="trabago-theme"
           >

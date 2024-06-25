@@ -14,7 +14,7 @@ const HeroNavbar = () => {
     router.push("/signup");
   };
   return (
-    <div className="flex h-[100px] w-full items-center justify-between px-[50px] xl:px-[100px]">
+    <div className="flex h-[100px] w-full items-center justify-between px-[50px] xl:px-[100px] border-b">
       <div className="flex items-center gap-2">
         <Image
           height={70}
@@ -30,7 +30,7 @@ const HeroNavbar = () => {
       <div className="flex gap-4">
         <ModeToggle />
         <Button
-          className="text-md border bg-black font-semibold text-white transition-all duration-300 hover:bg-zinc-900/50 hover:text-zinc-200"
+          className="text-md border bg-white text-black dark:bg-black font-semibold dark:text-white transition-all duration-300 dark:hover:bg-zinc-900/50 dark:hover:text-zinc-200"
           onClick={handleLoginClick}
         >
           Login
