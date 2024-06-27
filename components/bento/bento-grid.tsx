@@ -2,7 +2,6 @@ import { Course } from "@/lib/types";
 import CourseCard from "./course-card";
 import TextCard from "./text-card";
 
-
 interface BentoGridProps {
   missingHardSkills: string[];
   missingSoftSkills: string[];
@@ -15,11 +14,11 @@ const BentoGrid: React.FC<BentoGridProps> = ({
   udemyCourses,
 }) => {
   return (
-    <div className="grid grid-cols-4 grid-rows-2 gap-4 rounded-xl dark:bg-zinc-900/80 bg-zinc-200/80 p-4 xl:h-[85vh] xl:w-[60vw]">
+    <div className="grid grid-cols-4 grid-rows-2 gap-4 rounded-xl bg-zinc-200/80 p-4 dark:bg-zinc-900/80 xl:h-[85vh] xl:w-[60vw]">
       <TextCard heading="Missing Hard Skills" items={missingHardSkills} />
       <TextCard heading="Missing Soft Skills" items={missingSoftSkills} />
 
-      {udemyCourses.map((course: Course) => (
+      {udemyCourses.slice(0, 4).map((course: Course) => (
         <CourseCard
           key={course.courseUrl}
           imageUrl={course.imageUrl}

@@ -1,7 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import BentoGrid from "@/components/bento/bento-grid";
-import Image from "next/image";
 import { AlertCircle } from "lucide-react";
 
 export default function TargetedReport() {
