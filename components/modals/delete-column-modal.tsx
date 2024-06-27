@@ -49,13 +49,13 @@ const DeleteColumnModal = () => {
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-        toast.error(`Error: ${error.response.data}. Please try again.`);
+        toast.error("An unexpected error occurred. Please try again later.");
       } else if (error.request) {
         toast.error(
           "No response from server. Please check your connection and try again.",
         );
       } else {
-        toast.error(`Error: ${error.message}. Please try again.`);
+        toast.error("An unexpected error occurred. Please try again later.");
       }
     } finally {
       setIsLoading(false);
@@ -77,14 +77,14 @@ const DeleteColumnModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden dark:bg-zinc-950 p-0 dark:text-white text-zinc-900">
+      <DialogContent className="overflow-hidden p-0 text-zinc-900 dark:bg-zinc-950 dark:text-white">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
             Delete Column
           </DialogTitle>
-          <DialogDescription className="pt-4 text-center dark:text-zinc-300 text-zinc-600">
+          <DialogDescription className="pt-4 text-center text-zinc-600 dark:text-zinc-300">
             Confirm deletion of column
-            <span className="font-semibold dark:text-white text-zinc-900">
+            <span className="font-semibold text-zinc-900 dark:text-white">
               {" "}
               {column?.name}
             </span>{" "}
@@ -103,7 +103,7 @@ const DeleteColumnModal = () => {
             <Button
               disabled={isLoading}
               onClick={onClickHandler}
-              className="text-white transition-all duration-300 ease-in bg-[#0b70a9] hover:bg-[#0b70a9]/80 "
+              className="bg-[#0b70a9] text-white transition-all duration-300 ease-in hover:bg-[#0b70a9]/80 "
             >
               Confirm
             </Button>

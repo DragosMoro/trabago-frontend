@@ -212,13 +212,14 @@ const EditJobModal = () => {
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-        toast.error(`Error: ${error.response.data}. Please try again.`);
+        toast.error("An unexpected error occurred. Please try again later.");
       } else if (error.request) {
         toast.error(
           "No response from server. Please check your connection and try again.",
         );
       } else {
-        toast.error(`Error: ${error.message}. Please try again.`);
+        toast.error("An unexpected error occurred. Please try again later.");
+
       }
     }
   };
@@ -247,7 +248,8 @@ const EditJobModal = () => {
           "No response from server. Please check your connection and try again.",
         );
       } else {
-        toast.error(`Error: ${error.message}. Please try again.`);
+        toast.error("An unexpected error occurred. Please try again later.");
+
       }
     }
   };

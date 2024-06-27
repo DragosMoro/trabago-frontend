@@ -76,7 +76,7 @@ const SignUp = () => {
       if (error.response && error.response.status === 409) {
         toast.error("User already exists.");
       } else {
-        toast.error(`${error.message}`);
+        toast.error("An unexpected error occurred. Please try again later.");
       }
     }
   };

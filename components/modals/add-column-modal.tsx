@@ -87,13 +87,14 @@ const AddColumnModal = () => {
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-        toast.error(`${error.response.data}`);
+        toast.error("An unexpected error occurred. Please try again later.");
+
       } else if (error.request) {
         toast.error(
           "No response from server. Please check your connection and try again.",
         );
       } else {
-        toast.error(`${error.message}`);
+        toast.error("An unexpected error occurred. Please try again later.");
       }
     }
   };

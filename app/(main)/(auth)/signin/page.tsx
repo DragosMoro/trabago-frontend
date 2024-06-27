@@ -65,9 +65,11 @@ const SignIn = () => {
       form.reset();
       router.push("/boards");
     } catch (error: any) {
-      console.log(error);
-
-      toast.error(`${error.message}`);
+      if (error.response && error.response.status === 401) {
+        toast.error("Incorrect email or password. Please try again.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
@@ -86,7 +88,7 @@ const SignIn = () => {
     }
   }, [isLoggedIn, router]);
   return (
-    <div className="bg-gradient-light dark:bg-gradient-dark flex h-screen w-full flex-col items-center justify-center">
+    <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-light dark:bg-gradient-dark">
       <div className="sha flex h-[650px] w-[300px] flex-col items-center justify-center rounded-lg dark:border-[#181818] sm:w-[580px] sm:border-[0.5px] sm:bg-zinc-100 dark:sm:bg-zinc-950 ">
         <h1 className="mb-[30px] text-2xl font-semibold dark:text-white sm:mb-[50px] sm:text-3xl">
           Sign In
