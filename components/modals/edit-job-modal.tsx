@@ -67,11 +67,14 @@ const formSchema = z.object({
   company: z.string().min(1, "Company name is required"),
   position: z.string().min(1, "Position is required"),
   location: z.string().min(1, "Location is required"),
-  description: z.string(),
   column: z.string().min(1, "Column is required"),
   date: z.date({
     required_error: "A date is required.",
   }),
+  description: z
+    .string()
+    .max(2000, "Description should not exceed 2000 characters")
+    .optional(),
   salary: z.string(),
   jobUrl: z.string().optional(),
   jobType: z.string().optional(),
@@ -136,7 +139,7 @@ const EditJobModal = () => {
   const fetchColumns = async (query = ""): Promise<Column[]> => {
     if (user) {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAll`,
+        `${process.env.NEXT_PUBLIC_API_URL}/jobColumn/getAllByUser/${user.data.id}`,
         {
           headers: { Authorization: bearerAuth(user) },
         },
@@ -602,6 +605,7 @@ const EditJobModal = () => {
                         <Textarea
                           placeholder="Enter The Job Description"
                           className="h-[150px] w-[770px] resize-none"
+                          maxLength={2000}
                           {...field}
                         />
                       </FormControl>
