@@ -71,12 +71,9 @@ const formSchema = z.object({
   date: z.date({
     required_error: "A date is required.",
   }),
-  description: z
-    .string()
-    .max(2000, "Description should not exceed 2000 characters")
-    .optional(),
+  description: z.string().optional(),
   salary: z.string(),
-  jobUrl: z.string().optional(),
+  jobUrl: z.string(),
   jobType: z.string().optional(),
   workMode: z.string().optional(),
 });
@@ -219,7 +216,6 @@ const EditJobModal = () => {
         );
       } else {
         toast.error("An unexpected error occurred. Please try again later.");
-
       }
     }
   };
@@ -249,7 +245,6 @@ const EditJobModal = () => {
         );
       } else {
         toast.error("An unexpected error occurred. Please try again later.");
-
       }
     }
   };
@@ -609,7 +604,6 @@ const EditJobModal = () => {
                         <Textarea
                           placeholder="Enter The Job Description"
                           className="h-[150px] w-[770px] resize-none"
-                          maxLength={2000}
                           {...field}
                         />
                       </FormControl>
