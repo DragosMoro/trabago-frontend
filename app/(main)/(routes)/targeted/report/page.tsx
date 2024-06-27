@@ -22,7 +22,7 @@ export default function TargetedReport() {
             No Data Received
           </h1>
           <p className="mt-2 text-gray-700 dark:text-gray-300">
-            It seems like we didn't get any data. Please try again.
+            It seems like we didn&apos;t get any data. Please try again.
           </p>
           <button
             className="mt-6 rounded-lg bg-gray-700 px-4 py-2 font-semibold text-white shadow-md hover:bg-gray-900"
