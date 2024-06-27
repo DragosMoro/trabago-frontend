@@ -168,7 +168,13 @@ const AddJobModal = () => {
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-        toast.error(`Error: ${error.response.data}. Please try again.`);
+        if (error.response.status === 500) {
+          toast.error(
+            "Error: One or more fields exceed the maximum length of 255 characters. Please shorten your input and try again.",
+          );
+        } else {
+          toast.error(`Error: ${error.response.data}. Please try again.`);
+        }
       } else if (error.request) {
         toast.error(
           "No response from server. Please check your connection and try again.",
