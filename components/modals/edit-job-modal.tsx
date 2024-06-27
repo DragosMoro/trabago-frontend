@@ -235,17 +235,13 @@ const EditJobModal = () => {
       }
       form.reset();
       onClose();
-      toast.success("The job has been deleted successfully.");
+      toast.success("The job has been updated successfully.");
     } catch (error: any) {
       console.log(error);
       if (error.response) {
-        if (error.response.status === 500) {
-          toast.error(
-            "Error: One or more fields exceed the maximum length of 255 characters. Please shorten your input and try again.",
-          );
-        } else {
-          toast.error(`Error: ${error.response.data}. Please try again.`);
-        }
+        toast.error(
+          "Error: One or more fields exceed the maximum length of 255 characters. Please shorten your input and try again.",
+        );
       } else if (error.request) {
         toast.error(
           "No response from server. Please check your connection and try again.",
