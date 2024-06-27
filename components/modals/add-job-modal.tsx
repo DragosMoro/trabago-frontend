@@ -72,7 +72,7 @@ const formSchema = z.object({
     required_error: "A date is required.",
   }),
   salary: z.string(),
-  jobUrl: z.string(),
+  url: z.string(),
   description: z
     .string()
     .max(2000, "Description should not exceed 2000 characters")
@@ -103,7 +103,7 @@ const AddJobModal = () => {
       column: columnFormat ? columnFormat.name : "",
       date: new Date(),
       salary: "",
-      jobUrl: "",
+      url: "",
       jobType: "",
       workMode: "",
     },
@@ -191,9 +191,9 @@ const AddJobModal = () => {
   };
 
   const onLinkClick = () => {
-    const jobUrl = form.getValues().jobUrl;
-    if (jobUrl) {
-      window.open(jobUrl, "_blank");
+    const url = form.getValues().url;
+    if (url) {
+      window.open(url, "_blank");
     }
   };
 
@@ -383,10 +383,10 @@ const AddJobModal = () => {
                     </FormItem>
                   )}
                 />
-                {/* this is the jobUrl field */}
+                {/* this is the url field */}
                 <FormField
                   control={form.control}
-                  name="jobUrl"
+                  name="url"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
