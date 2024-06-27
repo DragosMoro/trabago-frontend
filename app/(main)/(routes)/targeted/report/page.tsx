@@ -26,7 +26,7 @@ export default function TargetedReport() {
           </p>
           <button
             className="mt-6 rounded-lg bg-gray-700 px-4 py-2 font-semibold text-white shadow-md hover:bg-gray-900"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/boards")}
           >
             Go Back to Home
           </button>
@@ -56,7 +56,7 @@ export default function TargetedReport() {
           </p>
           <button
             className="mt-6 rounded-lg bg-gray-700 px-4 py-2 font-semibold text-white shadow-md hover:bg-gray-900"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/boards")}
           >
             Go Back to Home
           </button>
