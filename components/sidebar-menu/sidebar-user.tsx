@@ -25,11 +25,10 @@ const SidebarUser = () => {
         <div className="m-auto flex h-[50px] w-[200px] cursor-pointer items-center justify-center gap-2 rounded-lg border">
           <UserCircle2 className="h-6 w-6 " />
           <span>
-            {/* {console.log(user.data)} */}
             {user?.data.name.length > 1
               ? user?.data.name.length > 20
-                ? user?.data.name.split(" ")[0]
-                : user?.data.name
+                ? decodeURIComponent(user?.data.name.split(" ")[0])
+                : decodeURIComponent(user?.data.name)
               : "User Information"}
           </span>
         </div>
