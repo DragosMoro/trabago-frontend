@@ -30,6 +30,10 @@ module.exports = {
         "gradient-dark":
           "radial-gradient(circle, rgba(4,42,64,1) 1%, rgba(0,0,0,1) 100%)",
       },
+      dropShadow: {
+        lg: "0 10px 8px rgba(0, 0, 0, 0.3)",
+        md: "0 4px 3px rgba(0, 0, 0, 0.2)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
